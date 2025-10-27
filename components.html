@@ -1,0 +1,253 @@
+<!-- components.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>UI Компоненты - Githsz</title>
+    <meta name="description" content="Готовые React и Vue компоненты для веб-разработки">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <nav class="main-nav" id="mainNav">
+            <div class="nav-container">
+                <a href="index.html" class="nav-brand">Githsz</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Меню">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="icons.html" class="nav-link">Иконки</a>
+                    <a href="tools.html" class="nav-link">Инструменты</a>
+                    <a href="components.html" class="nav-link active">Компоненты</a>
+                    <a href="utilities.html" class="nav-link">Утилиты</a>
+                    <a href="contact.html" class="nav-link">Контакты</a>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero" style="min-height: 50vh; padding-top: 120px;">
+            <canvas id="blobCanvas" class="blob-canvas"></canvas>
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-gradient">UI Компоненты</span>
+                </h1>
+                <p class="hero-description">Готовые компоненты для React, Vue и чистого JavaScript</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="framework-tabs">
+                    <button class="framework-tab active" data-framework="react">React</button>
+                    <button class="framework-tab" data-framework="vue">Vue</button>
+                    <button class="framework-tab" data-framework="js">JavaScript</button>
+                </div>
+
+                <div class="components-showcase">
+                    <!-- React Components -->
+                    <div class="framework-content active" id="react-components">
+                        <div class="component-category">
+                            <h3>Кнопки</h3>
+                            <div class="component-grid">
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <button class="btn btn-primary">Primary Button</button>
+                                        <button class="btn btn-secondary">Secondary Button</button>
+                                        <button class="btn btn-outline">Outline Button</button>
+                                    </div>
+                                    <div class="component-code">
+                                        <pre><code>import React from 'react';
+import './Button.css';
+
+const Button = ({ 
+  children, 
+  variant = 'primary',
+  size = 'medium',
+  disabled = false,
+  onClick 
+}) => {
+  return (
+    <button
+      className={`btn btn-${variant} btn-${size}`}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+};
+
+export default Button;</code></pre>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="component-category">
+                            <h3>Карточки</h3>
+                            <div class="component-grid">
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <div class="demo-card">
+                                            <h4>Demo Card</h4>
+                                            <p>Это пример карточки с контентом</p>
+                                            <button class="btn btn-primary">Действие</button>
+                                        </div>
+                                    </div>
+                                    <div class="component-code">
+                                        <pre><code>import React from 'react';
+
+const Card = ({ title, children, actions }) => {
+  return (
+    <div className="card">
+      {title && <h3 className="card-title">{title}</h3>}
+      <div className="card-content">
+        {children}
+      </div>
+      {actions && (
+        <div className="card-actions">
+          {actions}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Card;</code></pre>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vue Components -->
+                    <div class="framework-content" id="vue-components">
+                        <div class="component-category">
+                            <h3>Кнопки Vue</h3>
+                            <div class="component-grid">
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <button class="btn btn-primary">Vue Primary</button>
+                                        <button class="btn btn-secondary">Vue Secondary</button>
+                                    </div>
+                                    <div class="component-code">
+                                        <pre><code>&lt;template&gt;
+  &lt;button
+    :class="['btn', `btn-${variant}`, `btn-${size}`]"
+    :disabled="disabled"
+    @click="$emit('click')"
+  &gt;
+    &lt;slot&gt;{{ text }}&lt;/slot&gt;
+  &lt;/button&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  name: 'VButton',
+  props: {
+    variant: {
+      type: String,
+      default: 'primary',
+      validator: (value) => ['primary', 'secondary', 'outline'].includes(value)
+    },
+    size: {
+      type: String,
+      default: 'medium',
+      validator: (value) => ['small', 'medium', 'large'].includes(value)
+    },
+    disabled: Boolean,
+    text: String
+  },
+  emits: ['click']
+}
+&lt;/script&gt;</code></pre>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- JavaScript Components -->
+                    <div class="framework-content" id="js-components">
+                        <div class="component-category">
+                            <h3>Модальные окна</h3>
+                            <div class="component-grid">
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <button class="btn btn-primary" onclick="openModal()">Открыть модалку</button>
+                                    </div>
+                                    <div class="component-code">
+                                        <pre><code>class Modal {
+  constructor(selector) {
+    this.modal = document.querySelector(selector);
+    this.init();
+  }
+
+  init() {
+    // Закрытие по клику на overlay
+    this.modal.addEventListener('click', (e) => {
+      if (e.target === this.modal) {
+        this.close();
+      }
+    });
+
+    // Закрытие по ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.modal.style.display === 'flex') {
+        this.close();
+      }
+    });
+  }
+
+  open() {
+    this.modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  close() {
+    this.modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+}
+
+// Использование
+const modal = new Modal('#myModal');</code></pre>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Modal -->
+        <div id="demoModal" class="modal">
+            <div class="modal-content">
+                <h3>Демо модальное окно</h3>
+                <p>Это пример модального окна на чистом JavaScript</p>
+                <button class="btn btn-primary" onclick="closeModal()">Закрыть</button>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-brand">Githsz</div>
+                    <p class="footer-text">2025 © Fullstack GitHub Developer</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

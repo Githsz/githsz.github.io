@@ -10,6 +10,7 @@ class ComponentsManager {
         this.initCopyButtons();
         this.initDemoComponents();
         this.initCodeHighlighting();
+        this.initMobileOptimizations();
     }
 
     // Инициализация переключения между фреймворками
@@ -27,10 +28,16 @@ class ComponentsManager {
 
                 // Добавляем активный класс к выбранному табу и контенту
                 tab.classList.add('active');
-                document.getElementById(`${framework}-components`).classList.add('active');
+                const targetContent = document.getElementById(`${framework}-components`);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
 
                 // Сохраняем выбор в localStorage
                 localStorage.setItem('selectedFramework', framework);
+                
+                // Перерисовываем код для мобильных устройств
+                this.adjustCodeBlocksForMobile();
             });
         });
 
@@ -40,6 +47,32 @@ class ComponentsManager {
             const savedTab = document.querySelector(`[data-framework="${savedFramework}"]`);
             if (savedTab) savedTab.click();
         }
+    }
+
+    // Оптимизации для мобильных устройств
+    initMobileOptimizations() {
+        this.adjustCodeBlocksForMobile();
+        
+        // Пересчитываем при изменении размера окна
+        window.addEventListener('resize', () => {
+            this.adjustCodeBlocksForMobile();
+        });
+    }
+
+    // Адаптация блоков кода для мобильных устройств
+    adjustCodeBlocksForMobile() {
+        const codeBlocks = document.querySelectorAll('.component-code pre');
+        const isMobile = window.innerWidth < 768;
+        
+        codeBlocks.forEach(block => {
+            if (isMobile) {
+                block.style.fontSize = '0.7rem';
+                block.style.lineHeight = '1.3';
+            } else {
+                block.style.fontSize = '';
+                block.style.lineHeight = '';
+            }
+        });
     }
 
     // Инициализация кнопок копирования кода
@@ -72,6 +105,39 @@ class ComponentsManager {
         } catch (err) {
             this.showNotification('Ошибка при копировании кода', 'error');
             console.error('Ошибка копирования:', err);
+            
+            // Fallback для старых браузеров
+            this.fallbackCopyCode(code, button);
+        }
+    }
+
+    // Fallback метод копирования
+    fallbackCopyCode(code, button) {
+        const textArea = document.createElement('textarea');
+        textArea.value = code;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            document.execCommand('copy');
+            this.showNotification('Код скопирован!', 'success');
+            
+            const originalText = button.textContent;
+            button.textContent = 'Скопировано!';
+            button.classList.add('copied');
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.remove('copied');
+            }, 2000);
+        } catch (err) {
+            this.showNotification('Не удалось скопировать код', 'error');
+        } finally {
+            document.body.removeChild(textArea);
         }
     }
 
@@ -80,7 +146,8 @@ class ComponentsManager {
         this.initModalDemo();
         this.initTabsDemo();
         this.initAccordionDemo();
-        this.initToastDemo();
+        this.initCarouselDemo();
+        this.initFormValidationDemo();
     }
 
     // Демо модального окна
@@ -90,14 +157,22 @@ class ComponentsManager {
             if (modal) {
                 modal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
+                
+                // Добавляем класс для анимации
+                setTimeout(() => {
+                    modal.classList.add('active');
+                }, 10);
             }
         };
 
         window.closeModal = () => {
             const modal = document.getElementById('demoModal');
             if (modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                modal.classList.remove('active');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 300);
             }
         };
 
@@ -120,56 +195,58 @@ class ComponentsManager {
 
     // Демо табов
     initTabsDemo() {
-        const tabsContainer = document.querySelector('.tabs-demo');
-        if (!tabsContainer) return;
+        const tabsContainers = document.querySelectorAll('.tabs-demo');
+        
+        tabsContainers.forEach(container => {
+            const tabs = container.querySelectorAll('.tab');
+            const contents = container.querySelectorAll('.tab-content');
 
-        const tabs = tabsContainer.querySelectorAll('.tab');
-        const contents = tabsContainer.querySelectorAll('.tab-content');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabId = tab.dataset.tab;
-                
-                // Деактивируем все табы
-                tabs.forEach(t => t.classList.remove('active'));
-                contents.forEach(c => c.classList.remove('active'));
-                
-                // Активируем выбранный таб
-                tab.classList.add('active');
-                const content = tabsContainer.querySelector(`#${tabId}`);
-                if (content) content.classList.add('active');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.dataset.tab;
+                    
+                    // Деактивируем все табы
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    
+                    // Активируем выбранный таб
+                    tab.classList.add('active');
+                    const content = container.querySelector(`#${tabId}`);
+                    if (content) content.classList.add('active');
+                });
             });
         });
     }
 
     // Демо аккордеона
     initAccordionDemo() {
-        const accordionContainer = document.querySelector('.accordion-demo');
-        if (!accordionContainer) return;
+        const accordionContainers = document.querySelectorAll('.accordion-demo');
+        
+        accordionContainers.forEach(container => {
+            const items = container.querySelectorAll('.accordion-item');
 
-        const items = accordionContainer.querySelectorAll('.accordion-item');
+            items.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                const icon = header.querySelector('.accordion-icon');
 
-        items.forEach(item => {
-            const header = item.querySelector('.accordion-header');
-            const content = item.querySelector('.accordion-content');
-            const icon = header.querySelector('.accordion-icon');
-
-            header.addEventListener('click', () => {
-                const isOpen = content.style.maxHeight;
-                
-                // Закрываем все элементы
-                this.closeAllAccordions(accordionContainer);
-                
-                // Открываем текущий, если был закрыт
-                if (!isOpen) {
-                    content.style.maxHeight = content.scrollHeight + 'px';
-                    header.classList.add('active');
-                    icon.textContent = '−';
-                } else {
-                    content.style.maxHeight = null;
-                    header.classList.remove('active');
-                    icon.textContent = '+';
-                }
+                header.addEventListener('click', () => {
+                    const isOpen = content.style.maxHeight;
+                    
+                    // Закрываем все элементы в этом контейнере
+                    this.closeAllAccordions(container);
+                    
+                    // Открываем текущий, если был закрыт
+                    if (!isOpen) {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        header.classList.add('active');
+                        icon.textContent = '−';
+                    } else {
+                        content.style.maxHeight = null;
+                        header.classList.remove('active');
+                        icon.textContent = '+';
+                    }
+                });
             });
         });
     }
@@ -187,18 +264,104 @@ class ComponentsManager {
         });
     }
 
-    // Демо тостов/уведомлений
-    initToastDemo() {
-        window.showDemoToast = (type = 'info') => {
-            const messages = {
-                info: 'Информационное уведомление',
-                success: 'Успешное выполнение!',
-                warning: 'Предупреждение',
-                error: 'Произошла ошибка'
-            };
+    // Демо карусели
+    initCarouselDemo() {
+        // Создаем демо карусель если нужно
+        const carouselPreviews = document.querySelectorAll('.component-preview');
+        carouselPreviews.forEach(preview => {
+            if (preview.textContent.includes('Carousel Preview')) {
+                this.createDemoCarousel(preview);
+            }
+        });
+    }
 
-            this.showNotification(messages[type], type);
-        };
+    createDemoCarousel(container) {
+        const carouselHTML = `
+            <div class="demo-carousel" style="width: 100%; height: 100px; background: var(--bg-surface-variant); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); position: relative;">
+                <div class="carousel-slide active">Slide 1</div>
+                <div class="carousel-slide">Slide 2</div>
+                <div class="carousel-slide">Slide 3</div>
+                <button class="carousel-prev" style="position: absolute; left: 10px; background: rgba(0,0,0,0.5); color: white; border: none; padding: 5px 10px; border-radius: 4px;">‹</button>
+                <button class="carousel-next" style="position: absolute; right: 10px; background: rgba(0,0,0,0.5); color: white; border: none; padding: 5px 10px; border-radius: 4px;">›</button>
+            </div>
+        `;
+        
+        container.innerHTML = carouselHTML;
+        
+        // Инициализация простой карусели
+        const carousel = container.querySelector('.demo-carousel');
+        const slides = carousel.querySelectorAll('.carousel-slide');
+        const prevBtn = carousel.querySelector('.carousel-prev');
+        const nextBtn = carousel.querySelector('.carousel-next');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === index ? 'flex' : 'none';
+            });
+            currentSlide = index;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            let newIndex = currentSlide - 1;
+            if (newIndex < 0) newIndex = slides.length - 1;
+            showSlide(newIndex);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            let newIndex = currentSlide + 1;
+            if (newIndex >= slides.length) newIndex = 0;
+            showSlide(newIndex);
+        });
+
+        showSlide(0);
+    }
+
+    // Демо валидации формы
+    initFormValidationDemo() {
+        const emailInputs = document.querySelectorAll('input[type="email"]');
+        emailInputs.forEach(input => {
+            if (!input.parentNode.classList.contains('search-box')) {
+                input.addEventListener('blur', (e) => {
+                    this.validateEmailField(e.target);
+                });
+                
+                input.addEventListener('input', (e) => {
+                    this.clearFieldError(e.target);
+                });
+            }
+        });
+    }
+
+    validateEmailField(field) {
+        const value = field.value.trim();
+        if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+            this.showFieldError(field, 'Invalid email format');
+        } else {
+            this.clearFieldError(field);
+        }
+    }
+
+    showFieldError(field, message) {
+        this.clearFieldError(field);
+        field.classList.add('error');
+        
+        const errorElement = document.createElement('div');
+        errorElement.className = 'field-error';
+        errorElement.textContent = message;
+        errorElement.style.color = '#CF6679';
+        errorElement.style.fontSize = '0.8rem';
+        errorElement.style.marginTop = '0.25rem';
+        
+        field.parentNode.appendChild(errorElement);
+    }
+
+    clearFieldError(field) {
+        field.classList.remove('error');
+        const existingError = field.parentNode.querySelector('.field-error');
+        if (existingError) {
+            existingError.remove();
+        }
     }
 
     // Показать уведомление
@@ -255,7 +418,11 @@ class ComponentsManager {
             mutations.forEach((mutation) => {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
                     if (mutation.target.classList.contains('active')) {
-                        Prism.highlightAllUnder(mutation.target);
+                        // Даем время для отображения контента
+                        setTimeout(() => {
+                            Prism.highlightAllUnder(mutation.target);
+                            this.adjustCodeBlocksForMobile();
+                        }, 100);
                     }
                 }
             });
@@ -264,21 +431,26 @@ class ComponentsManager {
         document.querySelectorAll('.framework-content').forEach(content => {
             observer.observe(content, { attributes: true });
         });
+
+        // Первоначальная подсветка
+        setTimeout(() => {
+            Prism.highlightAll();
+            this.adjustCodeBlocksForMobile();
+        }, 500);
     }
 
     // Генератор компонентов
     generateComponent(type, options = {}) {
-        switch (type) {
-            case 'button':
-                return this.generateButton(options);
-            case 'modal':
-                return this.generateModal(options);
-            case 'card':
-                return this.generateCard(options);
-            default:
-                console.warn('Неизвестный тип компонента:', type);
-                return null;
-        }
+        const generators = {
+            button: this.generateButton,
+            modal: this.generateModal,
+            card: this.generateCard,
+            input: this.generateInput,
+            alert: this.generateAlert
+        };
+
+        const generator = generators[type];
+        return generator ? generator.call(this, options) : null;
     }
 
     generateButton({ text, variant = 'primary', size = 'medium', disabled = false }) {
@@ -315,6 +487,26 @@ class ComponentsManager {
             ` : ''}
         `;
         return card;
+    }
+
+    generateInput({ type = 'text', placeholder, value = '' }) {
+        const input = document.createElement('input');
+        input.type = type;
+        input.placeholder = placeholder;
+        input.value = value;
+        input.className = 'search-input';
+        input.style.maxWidth = '200px';
+        return input;
+    }
+
+    generateAlert({ message, variant = 'info' }) {
+        const alert = document.createElement('div');
+        alert.className = `alert alert-${variant}`;
+        alert.innerHTML = `
+            <div class="alert-content">${message}</div>
+            <button class="alert-close">×</button>
+        `;
+        return alert;
     }
 
     // Утилиты для работы с компонентами
@@ -389,129 +581,4 @@ function showComponentDemo(type) {
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
     window.componentsManager = new ComponentsManager();
-    
-    // Добавляем стили для демо-компонентов
-    const style = document.createElement('style');
-    style.textContent = `
-        .tabs-demo {
-            width: 100%;
-        }
-        
-        .tabs {
-            display: flex;
-            border-bottom: 2px solid var(--bg-surface-variant);
-            margin-bottom: 1rem;
-        }
-        
-        .tab {
-            padding: 12px 24px;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-        }
-        
-        .tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-        
-        .tab-content {
-            display: none;
-            padding: 1rem;
-            background: var(--bg-surface);
-            border-radius: var(--border-radius-md);
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        .accordion-demo {
-            width: 100%;
-        }
-        
-        .accordion-item {
-            border: 1px solid var(--bg-surface-variant);
-            border-radius: var(--border-radius-md);
-            margin-bottom: 0.5rem;
-            overflow: hidden;
-        }
-        
-        .accordion-header {
-            width: 100%;
-            padding: 1rem;
-            background: var(--bg-surface);
-            border: none;
-            color: var(--text-primary);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.3s ease;
-        }
-        
-        .accordion-header:hover {
-            background: var(--bg-surface-variant);
-        }
-        
-        .accordion-header.active {
-            background: var(--primary);
-            color: var(--text-on-accent);
-        }
-        
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            background: var(--bg-primary);
-        }
-        
-        .accordion-content p {
-            padding: 1rem;
-            margin: 0;
-        }
-        
-        .copy-btn.copied {
-            background: var(--secondary);
-            color: var(--text-on-accent);
-            border-color: var(--secondary);
-        }
-        
-        .card-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .loading {
-            position: relative;
-            pointer-events: none;
-        }
-        
-        .loading::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 16px;
-            height: 16px;
-            margin: -8px 0 0 -8px;
-            border: 2px solid transparent;
-            border-top: 2px solid currentColor;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-    `;
-    document.head.appendChild(style);
 });

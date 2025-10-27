@@ -1,0 +1,128 @@
+<!-- contact.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Контакты - Githsz</title>
+    <meta name="description" content="Свяжитесь со мной для сотрудничества">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <nav class="main-nav" id="mainNav">
+            <div class="nav-container">
+                <a href="index.html" class="nav-brand">Githsz</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Меню">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="icons.html" class="nav-link">Иконки</a>
+                    <a href="tools.html" class="nav-link">Инструменты</a>
+                    <a href="components.html" class="nav-link">Компоненты</a>
+                    <a href="utilities.html" class="nav-link">Утилиты</a>
+                    <a href="contact.html" class="nav-link active">Контакты</a>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero" style="min-height: 50vh; padding-top: 120px;">
+            <canvas id="blobCanvas" class="blob-canvas"></canvas>
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-gradient">Контакты</span>
+                </h1>
+                <p class="hero-description">Готов обсудить ваш проект или сотрудничество</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Давайте создавать вместе</h3>
+                        <p>Я всегда открыт для обсуждения новых проектов, идей и сотрудничества. Не стесняйтесь связаться со мной любым удобным способом.</p>
+                        
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">📱</div>
+                                <div>
+                                    <strong>GitHub</strong>
+                                    <a href="https://github.com/githsz" target="_blank">github.com/githsz</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">📧</div>
+                                <div>
+                                    <strong>Email</strong>
+                                    <a href="mailto:contact@githsz.com">contact@githsz.com</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">✈️</div>
+                                <div>
+                                    <strong>Telegram</strong>
+                                    <a href="https://t.me/githsz" target="_blank">@githsz</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">💼</div>
+                                <div>
+                                    <strong>LinkedIn</strong>
+                                    <a href="https://linkedin.com/in/githsz" target="_blank">linkedin.com/in/githsz</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="social-links">
+                            <a href="https://github.com/githsz" class="social-link" target="_blank">GitHub</a>
+                            <a href="https://t.me/githsz" class="social-link" target="_blank">Telegram</a>
+                            <a href="https://linkedin.com/in/githsz" class="social-link" target="_blank">LinkedIn</a>
+                            <a href="https://twitter.com/githsz" class="social-link" target="_blank">Twitter</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Имя *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Тема</label>
+                                <input type="text" id="subject" name="subject">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Сообщение *</label>
+                                <textarea id="message" name="message" rows="5" required placeholder="Расскажите о вашем проекте или идее..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="btn-text">Отправить сообщение</span>
+                                <div class="btn-loading" style="display: none;">Отправка...</div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-brand">Githsz</div>
+                    <p class="footer-text">2024 © Fullstack GitHub Developer</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/contact.js"></script>
+</body>
+</html>

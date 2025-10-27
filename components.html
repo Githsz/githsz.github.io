@@ -7,40 +7,138 @@
     <title>UI Компоненты - Githsz</title>
     <meta name="description" content="Крупнейшая библиотека React, Vue и JavaScript компонентов">
     <link rel="stylesheet" href="css/style.css">
-    <!-- Подключение Prism для подсветки синтаксиса -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <style>
-        .mobile-code-wrapper {
+        /* Мобильные стили для кода */
+        .component-code {
             position: relative;
+        }
+        .code-scroll-wrapper {
             width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            background: var(--bg-primary);
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--bg-surface-variant);
         }
-        .mobile-code-wrapper pre {
+        .code-scroll-wrapper pre {
+            margin: 0;
             min-width: min-content;
+            padding: 1rem;
         }
+        .code-scroll-wrapper code {
+            font-size: 0.75rem;
+            line-height: 1.3;
+            white-space: pre;
+            word-wrap: normal;
+        }
+        
+        /* Мобильная сетка */
+        .component-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        /* Улучшения для мобильных */
+        .component-card {
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .component-preview {
+            padding: 1rem;
+            min-height: auto;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .framework-tabs {
+            gap: 0.5rem;
+        }
+        
+        .framework-tab {
+            padding: 10px 16px;
+            font-size: 0.9rem;
+        }
+        
+        .components-showcase {
+            padding: 1rem;
+        }
+        
+        /* Десктоп стили */
+        @media (min-width: 768px) {
+            .component-grid {
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+                gap: 2rem;
+            }
+            
+            .component-card {
+                padding: 2rem;
+            }
+            
+            .component-preview {
+                padding: 2rem;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .code-scroll-wrapper code {
+                font-size: 0.8rem;
+            }
+            
+            .components-showcase {
+                padding: 3rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .component-grid {
+                grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            }
+        }
+        
         .component-badge {
             display: inline-block;
-            padding: 4px 8px;
+            padding: 2px 6px;
             background: var(--primary);
             color: var(--text-on-accent);
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 0.7rem;
-            margin-left: 8px;
+            margin-left: 6px;
             vertical-align: middle;
         }
+        
         .component-stats {
             display: flex;
             gap: 1rem;
             margin: 1rem 0;
             flex-wrap: wrap;
+            justify-content: center;
         }
+        
         .component-stat {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             color: var(--text-secondary);
             font-size: 0.9rem;
+        }
+        
+        .copy-btn {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        /* Улучшенные табы для мобильных */
+        .tabs-demo .tabs {
+            flex-wrap: wrap;
+        }
+        
+        .tabs-demo .tab {
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
         }
     </style>
 </head>
@@ -64,7 +162,7 @@
             </div>
         </nav>
 
-        <section class="hero" style="min-height: 50vh; padding-top: 120px;">
+        <section class="hero" style="min-height: 40vh; padding-top: 100px;">
             <canvas id="blobCanvas" class="blob-canvas"></canvas>
             <div class="hero-content">
                 <h1 class="hero-title">
@@ -72,14 +170,14 @@
                 </h1>
                 <p class="hero-description">Крупнейшая библиотека: 150+ компонентов для React, Vue и JavaScript</p>
                 <div class="component-stats">
-                    <div class="component-stat">📦 50+ React компонентов</div>
-                    <div class="component-stat">🎯 40+ Vue компонентов</div>
-                    <div class="component-stat">⚡ 60+ JavaScript компонентов</div>
+                    <div class="component-stat">📦 58 React компонентов</div>
+                    <div class="component-stat">🎯 42 Vue компонента</div>
+                    <div class="component-stat">⚡ 67 JavaScript компонентов</div>
                 </div>
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" style="padding: 40px 0;">
             <div class="container">
                 <div class="framework-tabs">
                     <button class="framework-tab active" data-framework="react">
@@ -89,31 +187,28 @@
                         Vue <span class="component-badge">42</span>
                     </button>
                     <button class="framework-tab" data-framework="js">
-                        JavaScript <span class="component-badge">67</span>
+                        JS <span class="component-badge">67</span>
                     </button>
                 </div>
 
                 <div class="components-showcase">
                     <!-- React Components -->
                     <div class="framework-content active" id="react-components">
-                        <!-- Basic UI -->
+                        <!-- Buttons -->
                         <div class="component-category">
-                            <h3>Базовые UI компоненты</h3>
+                            <h3>Кнопки</h3>
                             <div class="component-grid">
-                                <!-- Button -->
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <button class="btn btn-primary">Primary</button>
-                                        <button class="btn btn-secondary">Secondary</button>
-                                        <button class="btn btn-outline">Outline</button>
-                                        <button class="btn btn-primary" disabled>Disabled</button>
+                                        <button class="btn btn-primary" style="min-width: 120px;">Primary</button>
+                                        <button class="btn btn-secondary" style="min-width: 120px;">Secondary</button>
+                                        <button class="btn btn-outline" style="min-width: 120px;">Outline</button>
                                     </div>
                                     <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Button component
-import React from 'react';
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">import React from 'react';
 
-export const Button = ({ 
+const Button = ({ 
   children, 
   variant = 'primary',
   size = 'md',
@@ -121,14 +216,9 @@ export const Button = ({
   loading = false,
   onClick 
 }) => {
-  const baseClasses = 'btn';
-  const variantClass = `btn-${variant}`;
-  const sizeClass = `btn-${size}`;
-  const loadingClass = loading ? 'loading' : '';
-  
   return (
     &lt;button
-      className={`${baseClasses} ${variantClass} ${sizeClass} ${loadingClass}`}
+      className={`btn btn-${variant} btn-${size} ${loading ? 'loading' : ''}`}
       disabled={disabled || loading}
       onClick={onClick}
     &gt;
@@ -136,24 +226,31 @@ export const Button = ({
       {children}
     &lt;/button&gt;
   );
-};</code></pre>
+};
+
+export default Button;</code></pre>
                                         </div>
                                     </div>
                                     <button class="btn btn-outline copy-btn">Копировать код</button>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Input -->
+                        <!-- Inputs -->
+                        <div class="component-category">
+                            <h3>Поля ввода</h3>
+                            <div class="component-grid">
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <input type="text" placeholder="Basic input" class="search-input" style="max-width: 200px;">
-                                        <input type="text" placeholder="Disabled" class="search-input" style="max-width: 200px;" disabled>
+                                        <input type="text" placeholder="Обычное поле" class="search-input" style="max-width: 100%; margin: 5px 0;">
+                                        <input type="email" placeholder="Email поле" class="search-input" style="max-width: 100%; margin: 5px 0;">
+                                        <input type="password" placeholder="Пароль" class="search-input" style="max-width: 100%; margin: 5px 0;">
                                     </div>
                                     <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Input component
-import React, { useState } from 'react';
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">import React, { useState } from 'react';
 
-export const Input = ({
+const Input = ({
   type = 'text',
   placeholder,
   value,
@@ -172,31 +269,37 @@ export const Input = ({
   return (
     &lt;input
       type={type}
-      className={`input ${error ? 'error' : ''} ${disabled ? 'disabled' : ''}`}
+      className={`input ${error ? 'error' : ''}`}
       placeholder={placeholder}
-      value={internalValue}
+      value={value !== undefined ? value : internalValue}
       disabled={disabled}
       onChange={handleChange}
     /&gt;
   );
-};</code></pre>
+};
+
+export default Input;</code></pre>
                                         </div>
                                     </div>
                                     <button class="btn btn-outline copy-btn">Копировать код</button>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Modal -->
+                        <!-- Modal -->
+                        <div class="component-category">
+                            <h3>Модальные окна</h3>
+                            <div class="component-grid">
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <button class="btn btn-primary" onclick="openModal()">Открыть модалку</button>
+                                        <button class="btn btn-primary" onclick="openModal()" style="min-width: 140px;">Открыть модалку</button>
                                     </div>
                                     <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Modal component
-import React, { useEffect } from 'react';
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-export const Modal = ({ 
+const Modal = ({ 
   isOpen, 
   onClose, 
   title, 
@@ -231,91 +334,9 @@ export const Modal = ({
     &lt;/div&gt;,
     document.body
   );
-};</code></pre>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-outline copy-btn">Копировать код</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Layout Components -->
-                        <div class="component-category">
-                            <h3>Компоненты макета</h3>
-                            <div class="component-grid">
-                                <!-- Grid -->
-                                <div class="component-card">
-                                    <div class="component-preview">
-                                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%;">
-                                            <div style="background: var(--primary); height: 40px; border-radius: 4px;"></div>
-                                            <div style="background: var(--primary); height: 40px; border-radius: 4px;"></div>
-                                            <div style="background: var(--primary); height: 40px; border-radius: 4px;"></div>
-                                        </div>
-                                    </div>
-                                    <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Grid component
-import React from 'react';
-
-export const Grid = ({ 
-  children, 
-  cols = 3, 
-  gap = 'md',
-  responsive = true 
-}) => {
-  const gridClass = `grid grid-cols-${cols} gap-${gap} ${
-    responsive ? 'responsive' : ''
-  }`;
-
-  return (
-    &lt;div className={gridClass}&gt;
-      {children}
-    &lt;/div&gt;
-  );
 };
 
-export const GridItem = ({ 
-  children, 
-  span = 1 
-}) => {
-  return (
-    &lt;div className={`col-span-${span}`}&gt;
-      {children}
-    &lt;/div&gt;
-  );
-};</code></pre>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-outline copy-btn">Копировать код</button>
-                                </div>
-
-                                <!-- Container -->
-                                <div class="component-card">
-                                    <div class="component-preview">
-                                        <div style="max-width: 300px; margin: 0 auto; padding: 20px; background: var(--bg-surface); border-radius: 8px;">
-                                            Centered Container
-                                        </div>
-                                    </div>
-                                    <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Container component
-import React from 'react';
-
-export const Container = ({ 
-  children, 
-  size = 'lg',
-  fluid = false 
-}) => {
-  const containerClass = `container ${
-    fluid ? 'container-fluid' : `container-${size}`
-  }`;
-
-  return (
-    &lt;div className={containerClass}&gt;
-      {children}
-    &lt;/div&gt;
-  );
-};</code></pre>
+export default Modal;</code></pre>
                                         </div>
                                     </div>
                                     <button class="btn btn-outline copy-btn">Копировать код</button>
@@ -323,88 +344,26 @@ export const Container = ({
                             </div>
                         </div>
 
-                        <!-- Data Display -->
+                        <!-- Cards -->
                         <div class="component-category">
-                            <h3>Отображение данных</h3>
+                            <h3>Карточки</h3>
                             <div class="component-grid">
-                                <!-- Table -->
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <div style="overflow-x: auto;">
-                                            <table style="width: 100%; border-collapse: collapse;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="padding: 8px; border: 1px solid var(--bg-surface-variant);">Name</th>
-                                                        <th style="padding: 8px; border: 1px solid var(--bg-surface-variant);">Age</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="padding: 8px; border: 1px solid var(--bg-surface-variant);">John</td>
-                                                        <td style="padding: 8px; border: 1px solid var(--bg-surface-variant);">25</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Table component
-import React from 'react';
-
-export const Table = ({ 
-  columns, 
-  data, 
-  striped = false,
-  hoverable = false 
-}) => {
-  return (
-    &lt;div className="table-container"&gt;
-      &lt;table className={`table ${striped ? 'table-striped' : ''} ${
-        hoverable ? 'table-hover' : ''
-      }`}&gt;
-        &lt;thead&gt;
-          &lt;tr&gt;
-            {columns.map((col, index) => (
-              &lt;th key={index}&gt;{col.title}&lt;/th&gt;
-            ))}
-          &lt;/tr&gt;
-        &lt;/thead&gt;
-        &lt;tbody&gt;
-          {data.map((row, rowIndex) => (
-            &lt;tr key={rowIndex}&gt;
-              {columns.map((col, colIndex) => (
-                &lt;td key={colIndex}&gt;{row[col.key]}&lt;/td&gt;
-              ))}
-            &lt;/tr&gt;
-          ))}
-        &lt;/tbody&gt;
-      &lt;/table&gt;
-    &lt;/div&gt;
-  );
-};</code></pre>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-outline copy-btn">Копировать код</button>
-                                </div>
-
-                                <!-- Card -->
-                                <div class="component-card">
-                                    <div class="component-preview">
-                                        <div class="demo-card">
-                                            <h4>Card Title</h4>
-                                            <p>Card content with some description</p>
+                                        <div class="demo-card" style="max-width: 100%;">
+                                            <h4>Заголовок карточки</h4>
+                                            <p>Описание карточки с полезной информацией для пользователя</p>
                                             <div class="card-actions">
-                                                <button class="btn btn-primary">Action</button>
+                                                <button class="btn btn-primary" style="min-width: 100px;">Действие</button>
+                                                <button class="btn btn-outline" style="min-width: 100px;">Отмена</button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Card component
-import React from 'react';
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">import React from 'react';
 
-export const Card = ({ 
+const Card = ({ 
   title, 
   children, 
   actions,
@@ -427,174 +386,9 @@ export const Card = ({
       )}
     &lt;/div&gt;
   );
-};</code></pre>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-outline copy-btn">Копировать код</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Navigation -->
-                        <div class="component-category">
-                            <h3>Навигация</h3>
-                            <div class="component-grid">
-                                <!-- Tabs -->
-                                <div class="component-card">
-                                    <div class="component-preview">
-                                        <div class="tabs-demo">
-                                            <div class="tabs">
-                                                <button class="tab active">Tab 1</button>
-                                                <button class="tab">Tab 2</button>
-                                                <button class="tab">Tab 3</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Tabs component
-import React, { useState } from 'react';
-
-export const Tabs = ({ children, defaultActive = 0 }) => {
-  const [activeTab, setActiveTab] = useState(defaultActive);
-
-  return (
-    &lt;div className="tabs"&gt;
-      &lt;div className="tabs-header"&gt;
-        {React.Children.map(children, (child, index) => (
-          &lt;button
-            key={index}
-            className={`tab ${activeTab === index ? 'active' : ''}`}
-            onClick={() => setActiveTab(index)}
-          &gt;
-            {child.props.label}
-          &lt;/button&gt;
-        ))}
-      &lt;/div&gt;
-      &lt;div className="tabs-content"&gt;
-        {React.Children.toArray(children)[activeTab]}
-      &lt;/div&gt;
-    &lt;/div&gt;
-  );
 };
 
-export const Tab = ({ children }) => {
-  return &lt;div className="tab-panel"&gt;{children}&lt;/div&gt;;
-};</code></pre>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-outline copy-btn">Копировать код</button>
-                                </div>
-
-                                <!-- Breadcrumb -->
-                                <div class="component-card">
-                                    <div class="component-preview">
-                                        <div style="display: flex; gap: 8px; color: var(--text-secondary);">
-                                            <span>Home</span>
-                                            <span>/</span>
-                                            <span>Components</span>
-                                            <span>/</span>
-                                            <span style="color: var(--primary);">Breadcrumb</span>
-                                        </div>
-                                    </div>
-                                    <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Breadcrumb component
-import React from 'react';
-
-export const Breadcrumb = ({ items }) => {
-  return (
-    &lt;nav className="breadcrumb"&gt;
-      {items.map((item, index) => (
-        &lt;React.Fragment key={index}&gt;
-          {index > 0 && &lt;span className="breadcrumb-separator"&gt;/&lt;/span&gt;}
-          &lt;span className={`breadcrumb-item ${
-            index === items.length - 1 ? 'active' : ''
-          }`}&gt;
-            {item.label}
-          &lt;/span&gt;
-        &lt;/React.Fragment&gt;
-      ))}
-    &lt;/nav&gt;
-  );
-};</code></pre>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-outline copy-btn">Копировать код</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Feedback -->
-                        <div class="component-category">
-                            <h3>Обратная связь</h3>
-                            <div class="component-grid">
-                                <!-- Alert -->
-                                <div class="component-card">
-                                    <div class="component-preview">
-                                        <div style="padding: 12px; background: rgba(187, 134, 252, 0.1); border: 1px solid var(--primary); border-radius: 8px; color: var(--primary);">
-                                            This is an alert message
-                                        </div>
-                                    </div>
-                                    <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Alert component
-import React from 'react';
-
-export const Alert = ({ 
-  children, 
-  variant = 'info',
-  dismissible = false,
-  onDismiss 
-}) => {
-  return (
-    &lt;div className={`alert alert-${variant}`}&gt;
-      &lt;div className="alert-content"&gt;{children}&lt;/div&gt;
-      {dismissible && (
-        &lt;button className="alert-close" onClick={onDismiss}&gt;
-          ×
-        &lt;/button&gt;
-      )}
-    &lt;/div&gt;
-  );
-};</code></pre>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-outline copy-btn">Копировать код</button>
-                                </div>
-
-                                <!-- Progress -->
-                                <div class="component-card">
-                                    <div class="component-preview">
-                                        <div style="width: 100%; height: 8px; background: var(--bg-surface-variant); border-radius: 4px; overflow: hidden;">
-                                            <div style="width: 60%; height: 100%; background: var(--primary);"></div>
-                                        </div>
-                                    </div>
-                                    <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Progress component
-import React from 'react';
-
-export const Progress = ({ 
-  value = 0, 
-  max = 100,
-  variant = 'primary',
-  showLabel = false 
-}) => {
-  const percentage = Math.min(100, Math.max(0, (value / max) * 100));
-
-  return (
-    &lt;div className="progress"&gt;
-      &lt;div
-        className={`progress-bar progress-${variant}`}
-        style={{ width: `${percentage}%` }}
-      &gt;&lt;/div&gt;
-      {showLabel && (
-        &lt;span className="progress-label"&gt;{percentage}%&lt;/span&gt;
-      )}
-    &lt;/div&gt;
-  );
-};</code></pre>
+export default Card;</code></pre>
                                         </div>
                                     </div>
                                     <button class="btn btn-outline copy-btn">Копировать код</button>
@@ -605,21 +399,21 @@ export const Progress = ({
 
                     <!-- Vue Components -->
                     <div class="framework-content" id="vue-components">
-                        <!-- Basic UI -->
+                        <!-- Vue Buttons -->
                         <div class="component-category">
-                            <h3>Базовые UI компоненты Vue</h3>
+                            <h3>Кнопки Vue</h3>
                             <div class="component-grid">
-                                <!-- Vue Button -->
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <button class="btn btn-primary">Vue Button</button>
-                                        <button class="btn btn-secondary">Secondary</button>
+                                        <button class="btn btn-primary" style="min-width: 120px;">Vue Primary</button>
+                                        <button class="btn btn-secondary" style="min-width: 120px;">Vue Secondary</button>
+                                        <button class="btn btn-outline" style="min-width: 120px;">Vue Outline</button>
                                     </div>
                                     <div class="component-code">
-                                        <div class="mobile-code-wrapper">
+                                        <div class="code-scroll-wrapper">
                                             <pre><code class="language-javascript">&lt;template&gt;
   &lt;button
-    :class="['btn', `btn-${variant}`, `btn-${size}`, { loading, disabled }]"
+    :class="['btn', `btn-${variant}`, `btn-${size}`, { loading }]"
     :disabled="disabled || loading"
     @click="$emit('click', $event)"
   &gt;
@@ -634,13 +428,11 @@ export default {
   props: {
     variant: {
       type: String,
-      default: 'primary',
-      validator: (val) => ['primary', 'secondary', 'outline'].includes(val)
+      default: 'primary'
     },
     size: {
       type: String,
-      default: 'md',
-      validator: (val) => ['sm', 'md', 'lg'].includes(val)
+      default: 'md'
     },
     disabled: Boolean,
     loading: Boolean,
@@ -653,14 +445,19 @@ export default {
                                     </div>
                                     <button class="btn btn-outline copy-btn">Копировать код</button>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Vue Modal -->
+                        <!-- Vue Modal -->
+                        <div class="component-category">
+                            <h3>Модальные окна Vue</h3>
+                            <div class="component-grid">
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <button class="btn btn-primary">Open Vue Modal</button>
+                                        <button class="btn btn-primary" style="min-width: 140px;">Open Vue Modal</button>
                                     </div>
                                     <div class="component-code">
-                                        <div class="mobile-code-wrapper">
+                                        <div class="code-scroll-wrapper">
                                             <pre><code class="language-javascript">&lt;template&gt;
   &lt;Teleport to="body"&gt;
     &lt;div
@@ -710,78 +507,21 @@ export default {
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Form Components -->
-                        <div class="component-category">
-                            <h3>Формы Vue</h3>
-                            <div class="component-grid">
-                                <!-- Vue Form -->
-                                <div class="component-card">
-                                    <div class="component-preview">
-                                        <input type="text" placeholder="Vue Input" class="search-input" style="max-width: 200px;">
-                                    </div>
-                                    <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">&lt;template&gt;
-  &lt;form @submit.prevent="$emit('submit', formData)"&gt;
-    &lt;slot :form-data="formData" :update-field="updateField"&gt;&lt;/slot&gt;
-    &lt;div class="form-actions"&gt;
-      &lt;slot name="actions"&gt;
-        &lt;VButton type="submit"&gt;Submit&lt;/VButton&gt;
-      &lt;/slot&gt;
-    &lt;/div&gt;
-  &lt;/form&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import { reactive } from 'vue'
-
-export default {
-  name: 'VForm',
-  props: {
-    initialData: {
-      type: Object,
-      default: () => ({})
-    }
-  },
-  emits: ['submit'],
-  setup(props, { emit }) {
-    const formData = reactive({ ...props.initialData })
-
-    const updateField = (field, value) => {
-      formData[field] = value
-    }
-
-    return {
-      formData,
-      updateField
-    }
-  }
-}
-&lt;/script&gt;</code></pre>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-outline copy-btn">Копировать код</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- JavaScript Components -->
                     <div class="framework-content" id="js-components">
-                        <!-- Basic Components -->
+                        <!-- Modal JS -->
                         <div class="component-category">
-                            <h3>Базовые JavaScript компоненты</h3>
+                            <h3>Модальные окна JS</h3>
                             <div class="component-grid">
-                                <!-- Modal JS -->
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <button class="btn btn-primary" onclick="openModal()">Open Modal</button>
+                                        <button class="btn btn-primary" onclick="openModal()" style="min-width: 140px;">Open JS Modal</button>
                                     </div>
                                     <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Modal class
-class Modal {
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">class Modal {
   constructor(selector, options = {}) {
     this.modal = document.querySelector(selector);
     this.options = {
@@ -795,14 +535,12 @@ class Modal {
   init() {
     if (!this.modal) return;
 
-    // Overlay click
     if (this.options.closeOnOverlayClick) {
       this.modal.addEventListener('click', (e) => {
         if (e.target === this.modal) this.close();
       });
     }
 
-    // ESC key
     if (this.options.closeOnEsc) {
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && this.isOpen()) this.close();
@@ -825,15 +563,19 @@ class Modal {
   }
 }
 
-// Usage
 const modal = new Modal('#myModal');
 modal.open();</code></pre>
                                         </div>
                                     </div>
                                     <button class="btn btn-outline copy-btn">Копировать код</button>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Tabs JS -->
+                        <!-- Tabs JS -->
+                        <div class="component-category">
+                            <h3>Табы JS</h3>
+                            <div class="component-grid">
                                 <div class="component-card">
                                     <div class="component-preview">
                                         <div class="tabs-demo">
@@ -843,20 +585,19 @@ modal.open();</code></pre>
                                                 <button class="tab" data-tab="tab3">Tab 3</button>
                                             </div>
                                             <div class="tab-content active" id="tab1">
-                                                Content 1
+                                                Content for tab 1
                                             </div>
                                             <div class="tab-content" id="tab2">
-                                                Content 2
+                                                Content for tab 2
                                             </div>
                                             <div class="tab-content" id="tab3">
-                                                Content 3
+                                                Content for tab 3
                                             </div>
                                         </div>
                                     </div>
                                     <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Tabs class
-class Tabs {
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">class Tabs {
   constructor(container) {
     this.container = container;
     this.tabs = container.querySelectorAll('.tab');
@@ -874,11 +615,9 @@ class Tabs {
   }
 
   activateTab(tabId) {
-    // Deactivate all
     this.tabs.forEach(t => t.classList.remove('active'));
     this.contents.forEach(c => c.classList.remove('active'));
 
-    // Activate target
     const targetTab = this.container.querySelector(`[data-tab="${tabId}"]`);
     const targetContent = this.container.querySelector(`#${tabId}`);
 
@@ -887,7 +626,6 @@ class Tabs {
   }
 }
 
-// Auto-initialize
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.tabs-container').forEach(container => {
     new Tabs(container);
@@ -897,8 +635,13 @@ document.addEventListener('DOMContentLoaded', () => {
                                     </div>
                                     <button class="btn btn-outline copy-btn">Копировать код</button>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Accordion JS -->
+                        <!-- Accordion JS -->
+                        <div class="component-category">
+                            <h3>Аккордеон JS</h3>
+                            <div class="component-grid">
                                 <div class="component-card">
                                     <div class="component-preview">
                                         <div class="accordion-demo">
@@ -923,9 +666,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                         </div>
                                     </div>
                                     <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Accordion class
-class Accordion {
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">class Accordion {
   constructor(container) {
     this.container = container;
     this.items = container.querySelectorAll('.accordion-item');
@@ -940,11 +682,8 @@ class Accordion {
 
       header.addEventListener('click', () => {
         const isOpen = content.style.maxHeight;
-
-        // Close all items
         this.closeAll();
-
-        // Open current if it was closed
+        
         if (!isOpen) {
           content.style.maxHeight = content.scrollHeight + 'px';
           header.classList.add('active');
@@ -965,240 +704,12 @@ class Accordion {
       icon.textContent = '+';
     });
   }
-
-  openItem(index) {
-    const item = this.items[index];
-    if (item) {
-      item.querySelector('.accordion-header').click();
-    }
-  }
 }
 
-// Auto-initialize
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.accordion').forEach(acc => {
     new Accordion(acc);
   });
-});</code></pre>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-outline copy-btn">Копировать код</button>
-                                </div>
-
-                                <!-- Carousel JS -->
-                                <div class="component-card">
-                                    <div class="component-preview">
-                                        <div style="width: 100%; height: 100px; background: var(--bg-surface-variant); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
-                                            Carousel Preview
-                                        </div>
-                                    </div>
-                                    <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// Carousel class
-class Carousel {
-  constructor(container, options = {}) {
-    this.container = container;
-    this.slides = container.querySelectorAll('.carousel-slide');
-    this.currentIndex = 0;
-    this.options = {
-      autoPlay: false,
-      interval: 5000,
-      ...options
-    };
-    this.init();
-  }
-
-  init() {
-    this.createControls();
-    this.showSlide(this.currentIndex);
-
-    if (this.options.autoPlay) {
-      this.startAutoPlay();
-    }
-  }
-
-  createControls() {
-    const prevBtn = document.createElement('button');
-    const nextBtn = document.createElement('button');
-
-    prevBtn.className = 'carousel-prev';
-    nextBtn.className = 'carousel-next';
-
-    prevBtn.innerHTML = '‹';
-    nextBtn.innerHTML = '›';
-
-    prevBtn.addEventListener('click', () => this.prev());
-    nextBtn.addEventListener('click', () => this.next());
-
-    this.container.appendChild(prevBtn);
-    this.container.appendChild(nextBtn);
-  }
-
-  showSlide(index) {
-    this.slides.forEach((slide, i) => {
-      slide.style.display = i === index ? 'block' : 'none';
-    });
-    this.currentIndex = index;
-  }
-
-  next() {
-    let newIndex = this.currentIndex + 1;
-    if (newIndex >= this.slides.length) newIndex = 0;
-    this.showSlide(newIndex);
-  }
-
-  prev() {
-    let newIndex = this.currentIndex - 1;
-    if (newIndex < 0) newIndex = this.slides.length - 1;
-    this.showSlide(newIndex);
-  }
-
-  startAutoPlay() {
-    this.autoPlayInterval = setInterval(() => {
-      this.next();
-    }, this.options.interval);
-  }
-
-  stopAutoPlay() {
-    if (this.autoPlayInterval) {
-      clearInterval(this.autoPlayInterval);
-    }
-  }
-}</code></pre>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-outline copy-btn">Копировать код</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Form Components JS -->
-                        <div class="component-category">
-                            <h3>Формы и валидация</h3>
-                            <div class="component-grid">
-                                <!-- Form Validator -->
-                                <div class="component-card">
-                                    <div class="component-preview">
-                                        <input type="email" placeholder="Email" class="search-input" style="max-width: 200px;">
-                                    </div>
-                                    <div class="component-code">
-                                        <div class="mobile-code-wrapper">
-                                            <pre><code class="language-javascript">// FormValidator class
-class FormValidator {
-  constructor(form, rules) {
-    this.form = form;
-    this.rules = rules;
-    this.errors = {};
-    this.init();
-  }
-
-  init() {
-    this.form.addEventListener('submit', (e) => {
-      if (!this.validate()) {
-        e.preventDefault();
-        this.showErrors();
-      }
-    });
-
-    // Real-time validation
-    Object.keys(this.rules).forEach(fieldName => {
-      const field = this.form.querySelector(`[name="${fieldName}"]`);
-      if (field) {
-        field.addEventListener('blur', () => this.validateField(fieldName));
-        field.addEventListener('input', () => this.clearFieldError(fieldName));
-      }
-    });
-  }
-
-  validate() {
-    this.errors = {};
-    
-    Object.keys(this.rules).forEach(fieldName => {
-      this.validateField(fieldName);
-    });
-
-    return Object.keys(this.errors).length === 0;
-  }
-
-  validateField(fieldName) {
-    const field = this.form.querySelector(`[name="${fieldName}"]`);
-    const value = field?.value.trim();
-    const rules = this.rules[fieldName];
-
-    for (let rule of rules) {
-      const error = this.checkRule(rule, value, fieldName);
-      if (error) {
-        this.errors[fieldName] = error;
-        break;
-      }
-    }
-
-    if (!this.errors[fieldName]) {
-      this.clearFieldError(fieldName);
-    }
-
-    return !this.errors[fieldName];
-  }
-
-  checkRule(rule, value, fieldName) {
-    switch (rule.type) {
-      case 'required':
-        if (!value) return `${fieldName} is required`;
-        break;
-      case 'email':
-        if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          return 'Invalid email format';
-        }
-        break;
-      case 'minLength':
-        if (value && value.length < rule.value) {
-          return `Minimum ${rule.value} characters required`;
-        }
-        break;
-    }
-    return null;
-  }
-
-  showErrors() {
-    this.clearErrors();
-    
-    Object.keys(this.errors).forEach(fieldName => {
-      const field = this.form.querySelector(`[name="${fieldName}"]`);
-      const errorElement = document.createElement('div');
-      errorElement.className = 'field-error';
-      errorElement.textContent = this.errors[fieldName];
-      
-      field.parentNode.appendChild(errorElement);
-      field.classList.add('error');
-    });
-  }
-
-  clearErrors() {
-    this.form.querySelectorAll('.field-error').forEach(el => el.remove());
-    this.form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-  }
-
-  clearFieldError(fieldName) {
-    const field = this.form.querySelector(`[name="${fieldName}"]`);
-    if (field) {
-      field.classList.remove('error');
-      const errorElement = field.parentNode.querySelector('.field-error');
-      if (errorElement) errorElement.remove();
-    }
-    delete this.errors[fieldName];
-  }
-}
-
-// Usage
-const validator = new FormValidator(document.getElementById('myForm'), {
-  email: [
-    { type: 'required' },
-    { type: 'email' }
-  ],
-  password: [
-    { type: 'required' },
-    { type: 'minLength', value: 6 }
-  ]
 });</code></pre>
                                         </div>
                                     </div>
@@ -1230,7 +741,6 @@ const validator = new FormValidator(document.getElementById('myForm'), {
         </footer>
     </div>
 
-    <!-- Подключение Prism для подсветки синтаксиса -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
     

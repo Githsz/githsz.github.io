@@ -1,0 +1,136 @@
+<!-- utilities.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Утилиты - Githsz</title>
+    <meta name="description" content="Полезные инструменты и утилиты для разработчиков">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <nav class="main-nav" id="mainNav">
+            <div class="nav-container">
+                <a href="index.html" class="nav-brand">Githsz</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Меню">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="icons.html" class="nav-link">Иконки</a>
+                    <a href="tools.html" class="nav-link">Инструменты</a>
+                    <a href="components.html" class="nav-link">Компоненты</a>
+                    <a href="utilities.html" class="nav-link active">Утилиты</a>
+                    <a href="contact.html" class="nav-link">Контакты</a>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero" style="min-height: 50vh; padding-top: 120px;">
+            <canvas id="blobCanvas" class="blob-canvas"></canvas>
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-gradient">Утилиты</span>
+                </h1>
+                <p class="hero-description">Полезные инструменты для повседневной разработки</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="utilities-grid">
+                    <div class="utility-card">
+                        <div class="utility-icon">🎨</div>
+                        <h3>Генератор цветов</h3>
+                        <p>Создавайте идеальные цветовые палитры для ваших проектов</p>
+                        <div class="utility-preview">
+                            <div class="color-palette">
+                                <div class="color-box" style="background: #BB86FC;" data-color="#BB86FC"></div>
+                                <div class="color-box" style="background: #03DAC6;" data-color="#03DAC6"></div>
+                                <div class="color-box" style="background: #CF6679;" data-color="#CF6679"></div>
+                                <div class="color-box" style="background: #018786;" data-color="#018786"></div>
+                                <div class="color-box" style="background: #3700B3;" data-color="#3700B3"></div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="openColorGenerator()">Открыть генератор</button>
+                    </div>
+
+                    <div class="utility-card">
+                        <div class="utility-icon">📏</div>
+                        <h3>CSS Генератор</h3>
+                        <p>Генерируйте CSS код для теней, градиентов и анимаций</p>
+                        <div class="utility-preview">
+                            <div class="css-demo">
+                                <div class="demo-shadow">Тень</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="openCSSGenerator()">Использовать</button>
+                    </div>
+
+                    <div class="utility-card">
+                        <div class="utility-icon">🔤</div>
+                        <h3>Текст утилиты</h3>
+                        <p>Форматирование, преобразование и анализ текста</p>
+                        <div class="utility-preview">
+                            <div class="text-demo">
+                                <p>Пример текста для форматирования</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="openTextUtils()">Открыть</button>
+                    </div>
+
+                    <div class="utility-card">
+                        <div class="utility-icon">📊</div>
+                        <h3>JSON Валидатор</h3>
+                        <p>Проверка и форматирование JSON данных</p>
+                        <div class="utility-preview">
+                            <div class="json-demo">
+                                <code>{"name": "example"}</code>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="openJSONValidator()">Проверить JSON</button>
+                    </div>
+
+                    <div class="utility-card">
+                        <div class="utility-icon">🔢</div>
+                        <h3>Base64 Кодер</h3>
+                        <p>Кодирование и декодирование Base64</p>
+                        <div class="utility-preview">
+                            <div class="base64-demo">
+                                <code>SGVsbG8gV29ybGQ=</code>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="openBase64Encoder()">Использовать</button>
+                    </div>
+
+                    <div class="utility-card">
+                        <div class="utility-icon">⏰</div>
+                        <h3>Таймеры</h3>
+                        <p>Таймеры, секундомеры и напоминания</p>
+                        <div class="utility-preview">
+                            <div class="timer-demo">
+                                <div class="time-display">00:00</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="openTimers()">Открыть таймеры</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-brand">Githsz</div>
+                    <p class="footer-text">2025 © Fullstack GitHub Developer</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/utilities.js"></script>
+</body>
+</html>

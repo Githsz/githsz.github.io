@@ -1,0 +1,250 @@
+<!-- tools.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>GitHub Инструменты - Githsz</title>
+    <meta name="description" content="Готовые GitHub Actions workflow и инструменты для разработки">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <nav class="main-nav" id="mainNav">
+            <div class="nav-container">
+                <a href="index.html" class="nav-brand">Githsz</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Меню">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="icons.html" class="nav-link">Иконки</a>
+                    <a href="tools.html" class="nav-link active">Инструменты</a>
+                    <a href="components.html" class="nav-link">Компоненты</a>
+                    <a href="utilities.html" class="nav-link">Утилиты</a>
+                    <a href="contact.html" class="nav-link">Контакты</a>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero" style="min-height: 50vh; padding-top: 120px;">
+            <canvas id="blobCanvas" class="blob-canvas"></canvas>
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-gradient">GitHub Инструменты</span>
+                </h1>
+                <p class="hero-description">Готовые решения для автоматизации вашей разработки</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="tools-categories">
+                    <div class="category-card">
+                        <h2>GitHub Actions</h2>
+                        <div class="tools-grid">
+                            <div class="tool-card detailed">
+                                <div class="tool-icon">🚀</div>
+                                <h3>CI/CD Pipeline</h3>
+                                <p>Полный pipeline для автоматического тестирования и деплоя</p>
+                                <div class="tool-code">
+                                    <pre><code>name: CI/CD Pipeline
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+  
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: npm run deploy</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn" data-code="ci-cd-code">Копировать workflow</button>
+                            </div>
+
+                            <div class="tool-card detailed">
+                                <div class="tool-icon">📦</div>
+                                <h3>Docker Build</h3>
+                                <p>Автоматическая сборка и публикация Docker образов</p>
+                                <div class="tool-code">
+                                    <pre><code>name: Docker Build
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Docker image
+        run: docker build -t myapp:${{ github.sha }} .
+      - name: Push to Registry
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push myapp:${{ github.sha }}</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn">Копировать workflow</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <h2>Git Утилиты</h2>
+                        <div class="tools-grid">
+                            <div class="tool-card detailed">
+                                <div class="tool-icon">🔧</div>
+                                <h3>Auto Commit</h3>
+                                <p>Автоматическое создание коммитов с умными сообщениями</p>
+                                <div class="tool-code">
+                                    <pre><code>#!/bin/bash
+# git-auto-commit.sh
+# Автоматическое создание коммита с анализом изменений
+
+generate_commit_message() {
+    local added_files=$(git diff --cached --name-status | grep -E '^A' | wc -l)
+    local modified_files=$(git diff --cached --name-status | grep -E '^M' | wc -l)
+    local deleted_files=$(git diff --cached --name-status | grep -E '^D' | wc -l)
+    
+    if [ $added_files -gt 0 ]; then
+        echo "feat: add $added_files new file(s)"
+    elif [ $modified_files -gt 0 ]; then
+        echo "fix: update $modified_files file(s)"
+    elif [ $deleted_files -gt 0 ]; then
+        echo "refactor: remove $deleted_files file(s)"
+    else
+        echo "chore: update repository"
+    fi
+}
+
+COMMIT_MSG=$(generate_commit_message)
+git commit -m "$COMMIT_MSG"</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn">Копировать скрипт</button>
+                            </div>
+
+                            <div class="tool-card detailed">
+                                <div class="tool-icon">📝</div>
+                                <h3>Branch Cleaner</h3>
+                                <p>Очистка старых и мердженных веток</p>
+                                <div class="tool-code">
+                                    <pre><code>#!/bin/bash
+# git-clean-branches.sh
+# Очистка мердженных веток
+
+echo "🧹 Cleaning merged branches..."
+
+# Удаляем локальные ветки, которые уже смержены в main
+git branch --merged main | grep -v "main" | grep -v "master" | xargs -n 1 git branch -d
+
+# Удаляем отслеживание удаленных веток
+git fetch --prune
+
+# Показываем оставшиеся ветки
+echo "✅ Remaining branches:"
+git branch -a</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn">Копировать скрипт</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category-card">
+                        <h2>Полезные Скрипты</h2>
+                        <div class="tools-grid">
+                            <div class="tool-card detailed">
+                                <div class="tool-icon">📊</div>
+                                <h3>Repo Statistics</h3>
+                                <p>Скрипт для сбора статистики по репозиторию</p>
+                                <div class="tool-code">
+                                    <pre><code>#!/bin/bash
+# repo-stats.sh
+# Сбор статистики по Git репозиторию
+
+echo "📊 Repository Statistics"
+echo "========================"
+
+# Общее количество коммитов
+total_commits=$(git rev-list --count HEAD)
+echo "Total commits: $total_commits"
+
+# Количество contributors
+contributors=$(git shortlog -s -n | wc -l)
+echo "Contributors: $contributors"
+
+# Первый коммит
+first_commit=$(git log --reverse --format="%cd" --date=short | head -1)
+echo "First commit: $first_commit"
+
+# Активность по дням
+echo "Activity by day:"
+git log --format="%ad" --date=short | sort | uniq -c | sort -nr | head -10</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn">Копировать скрипт</button>
+                            </div>
+
+                            <div class="tool-card detailed">
+                                <div class="tool-icon">🔍</div>
+                                <h3>Code Search</h3>
+                                <p>Расширенный поиск по кодовой базе</p>
+                                <div class="tool-code">
+                                    <pre><code>#!/bin/bash
+# code-search.sh
+# Расширенный поиск по репозиторию
+
+search_pattern=$1
+file_type=$2
+
+if [ -z "$search_pattern" ]; then
+    echo "Usage: $0 <search_pattern> [file_type]"
+    exit 1
+fi
+
+echo "🔍 Searching for: $search_pattern"
+
+if [ -n "$file_type" ]; then
+    git grep -n "$search_pattern" -- "*.$file_type"
+else
+    git grep -n "$search_pattern"
+fi
+
+# Статистика найденных вхождений
+echo "📈 Search results:"
+git grep --count "$search_pattern"</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn">Копировать скрипт</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-brand">Githsz</div>
+                    <p class="footer-text">2024 © Fullstack GitHub Developer</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/tools.js"></script>
+</body>
+</html>

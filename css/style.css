@@ -677,6 +677,7 @@ body {
     margin-bottom: 1rem;
     overflow-x: auto;
     border: 1px solid var(--bg-surface-variant);
+    position: relative;
 }
 
 .component-code pre {
@@ -1299,6 +1300,154 @@ body {
     background: #CF6679;
 }
 
+.notification.info {
+    background: var(--primary);
+}
+
+.notification.warning {
+    background: #ff9800;
+}
+
+/* Components specific styles */
+.tabs-demo {
+    width: 100%;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 2px solid var(--bg-surface-variant);
+    margin-bottom: 1rem;
+}
+
+.tab {
+    padding: 12px 24px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    font-family: inherit;
+}
+
+.tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+.tab-content {
+    display: none;
+    padding: 1rem;
+    background: var(--bg-surface);
+    border-radius: var(--border-radius-md);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.accordion-demo {
+    width: 100%;
+}
+
+.accordion-item {
+    border: 1px solid var(--bg-surface-variant);
+    border-radius: var(--border-radius-md);
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 1rem;
+    background: var(--bg-surface);
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s ease;
+    font-family: inherit;
+}
+
+.accordion-header:hover {
+    background: var(--bg-surface-variant);
+}
+
+.accordion-header.active {
+    background: var(--primary);
+    color: var(--text-on-accent);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: var(--bg-primary);
+}
+
+.accordion-content p {
+    padding: 1rem;
+    margin: 0;
+}
+
+.copy-btn.copied {
+    background: var(--secondary);
+    color: var(--text-on-accent);
+    border-color: var(--secondary);
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Prism theme adjustments */
+.code-container {
+    position: relative;
+}
+
+.code-container pre[class*="language-"] {
+    margin: 0;
+    border-radius: var(--border-radius-md);
+    background: var(--bg-primary) !important;
+}
+
+.code-container code[class*="language-"] {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-menu {
@@ -1416,6 +1565,28 @@ body {
     .main-nav {
         padding-top: max(1rem, var(--safe-area-inset-top));
     }
+
+    /* Mobile tabs */
+    .tabs {
+        flex-direction: column;
+        border-bottom: none;
+    }
+
+    .tab {
+        border-bottom: 1px solid var(--bg-surface-variant);
+        border-radius: 0;
+        margin-bottom: 0;
+    }
+
+    .tab:first-child {
+        border-top-left-radius: var(--border-radius-md);
+        border-top-right-radius: var(--border-radius-md);
+    }
+
+    .tab:last-child {
+        border-bottom-left-radius: var(--border-radius-md);
+        border-bottom-right-radius: var(--border-radius-md);
+    }
 }
 
 @media (max-width: 480px) {
@@ -1467,6 +1638,18 @@ body {
         left: 10px;
         max-width: none;
     }
+
+    .component-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .component-card {
+        padding: 1.5rem;
+    }
+
+    .component-preview {
+        padding: 1rem;
+    }
 }
 
 /* High DPI displays */
@@ -1496,6 +1679,10 @@ body {
     }
 
     .scroll-arrow {
+        animation: none;
+    }
+
+    .loading::after {
         animation: none;
     }
 }

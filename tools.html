@@ -7,6 +7,7 @@
     <title>GitHub Инструменты - Githsz</title>
     <meta name="description" content="Готовые GitHub Actions workflow и инструменты для разработки">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/tools.css">
 </head>
 <body>
     <div class="page-wrapper">
@@ -41,190 +42,674 @@
         <section class="section">
             <div class="container">
                 <div class="tools-categories">
+                    <!-- GitHub Actions -->
                     <div class="category-card">
-                        <h2>GitHub Actions</h2>
+                        <h2>🚀 GitHub Actions</h2>
                         <div class="tools-grid">
-                            <div class="tool-card detailed">
-                                <div class="tool-icon">🚀</div>
-                                <h3>CI/CD Pipeline</h3>
-                                <p>Полный pipeline для автоматического тестирования и деплоя</p>
-                                <div class="tool-code">
-                                    <pre><code>name: CI/CD Pipeline
-on: [push, pull_request]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - run: npm ci
-      - run: npm test
-      - run: npm run build
-  
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - run: npm run deploy</code></pre>
+                            <div class="tool-card detailed new">
+                                <span class="complexity-badge complexity-beginner">Для начинающих</span>
+                                <div class="tool-icon">⚡</div>
+                                <h3>AI Code Review</h3>
+                                <p>Автоматический ревью кода с использованием искусственного интеллекта</p>
+                                <div class="tool-tags">
+                                    <span class="tool-tag">AI</span>
+                                    <span class="tool-tag">Review</span>
+                                    <span class="tool-tag">GPT</span>
                                 </div>
-                                <button class="btn btn-primary copy-btn" data-code="ci-cd-code">Копировать workflow</button>
+                                <div class="tool-code">
+                                    <pre><code>name: AI Code Review
+on: [pull_request]
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: AI Code Analysis
+        uses: mad9000/actions-fuzzy@v2
+        with:
+          actions: |
+            review-code:
+              pattern: "**/*.{js,ts,py,java}"
+              prompt: |
+                Проанализируй код на:
+                - Качество и читаемость
+                - Потенциальные баги
+                - Стиль кодирования
+                - Возможности оптимизации</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn">Копировать workflow</button>
+                            </div>
+
+                            <div class="tool-card detailed featured">
+                                <span class="complexity-badge complexity-intermediate">Средний уровень</span>
+                                <div class="tool-icon">🔒</div>
+                                <h3>Security Scan & Auto-Fix</h3>
+                                <p>Автоматическое сканирование уязвимостей и создание PR с фиксами</p>
+                                <div class="tool-tags">
+                                    <span class="tool-tag">Security</span>
+                                    <span class="tool-tag">Auto-Fix</span>
+                                    <span class="tool-tag">Dependencies</span>
+                                </div>
+                                <div class="tool-code">
+                                    <pre><code>name: Security Auto-Fix
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+  push:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Security Scan
+        uses: actions/dependency-review-action@v3
+      - name: Auto-create Fix PR
+        if: failure()
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: '🔒 Security Vulnerability Fixes'
+          body: 'Automated security fixes from scan results'</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn">Копировать workflow</button>
                             </div>
 
                             <div class="tool-card detailed">
-                                <div class="tool-icon">📦</div>
-                                <h3>Docker Build</h3>
-                                <p>Автоматическая сборка и публикация Docker образов</p>
+                                <span class="complexity-badge complexity-advanced">Продвинутый</span>
+                                <div class="tool-icon">🌍</div>
+                                <h3>Multi-Cloud Deployment</h3>
+                                <p>Автоматический деплой на несколько облачных провайдеров одновременно</p>
+                                <div class="tool-tags">
+                                    <span class="tool-tag">AWS</span>
+                                    <span class="tool-tag">GCP</span>
+                                    <span class="tool-tag">Azure</span>
+                                    <span class="tool-tag">Multi-Cloud</span>
+                                </div>
                                 <div class="tool-code">
-                                    <pre><code>name: Docker Build
+                                    <pre><code>name: Multi-Cloud Deploy
 on:
   push:
     branches: [ main ]
-    tags: [ 'v*' ]
 
 jobs:
-  build:
+  deploy-aws:
+    name: Deploy to AWS
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Build Docker image
-        run: docker build -t myapp:${{ github.sha }} .
-      - name: Push to Registry
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          docker push myapp:${{ github.sha }}</code></pre>
+      - uses: aws-actions/configure-aws-credentials@v1
+      - run: aws s3 sync ./dist s3://${{ secrets.AWS_BUCKET }}
+
+  deploy-gcp:
+    name: Deploy to GCP
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/auth@v0
+      - run: gcloud app deploy --quiet
+
+  deploy-azure:
+    name: Deploy to Azure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: azure/login@v1
+      - run: az webapp deploy --name ${{ secrets.AZURE_APP }}</code></pre>
                                 </div>
                                 <button class="btn btn-primary copy-btn">Копировать workflow</button>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Git Утилиты -->
                     <div class="category-card">
-                        <h2>Git Утилиты</h2>
+                        <h2>🔧 Git Утилиты</h2>
                         <div class="tools-grid">
-                            <div class="tool-card detailed">
-                                <div class="tool-icon">🔧</div>
-                                <h3>Auto Commit</h3>
-                                <p>Автоматическое создание коммитов с умными сообщениями</p>
+                            <div class="tool-card detailed new">
+                                <span class="complexity-badge complexity-beginner">Для начинающих</span>
+                                <div class="tool-icon">🤖</div>
+                                <h3>Git AI Assistant</h3>
+                                <p>ИИ-помощник для генерации умных коммитов и анализа изменений</p>
+                                <div class="tool-tags">
+                                    <span class="tool-tag">AI</span>
+                                    <span class="tool-tag">Assistant</span>
+                                    <span class="tool-tag">Auto-commit</span>
+                                </div>
                                 <div class="tool-code">
                                     <pre><code>#!/bin/bash
-# git-auto-commit.sh
-# Автоматическое создание коммита с анализом изменений
+# git-ai-assistant.sh
+# Умный ИИ-помощник для Git
 
-generate_commit_message() {
-    local added_files=$(git diff --cached --name-status | grep -E '^A' | wc -l)
-    local modified_files=$(git diff --cached --name-status | grep -E '^M' | wc -l)
-    local deleted_files=$(git diff --cached --name-status | grep -E '^D' | wc -l)
+analyze_changes() {
+    local changes=$(git diff --cached --name-status)
+    local added=$(echo "$changes" | grep -c '^A')
+    local modified=$(echo "$changes" | grep -c '^M')
+    local deleted=$(echo "$changes" | grep -c '^D')
     
-    if [ $added_files -gt 0 ]; then
-        echo "feat: add $added_files new file(s)"
-    elif [ $modified_files -gt 0 ]; then
-        echo "fix: update $modified_files file(s)"
-    elif [ $deleted_files -gt 0 ]; then
-        echo "refactor: remove $deleted_files file(s)"
+    # Анализ типов файлов
+    local js_files=$(git diff --cached --name-only | grep -c '\.js$')
+    local css_files=$(git diff --cached --name-only | grep -c '\.css$')
+    local test_files=$(git diff --cached --name-only | grep -c 'test')
+    
+    echo "🤖 AI Analysis:"
+    echo "📁 Files: +${added} ~${modified} -${deleted}"
+    echo "🔧 Types: JS(${js_files}) CSS(${css_files}) Tests(${test_files})"
+    
+    # Генерация умного сообщения коммита
+    if [ $test_files -gt 0 ]; then
+        echo "✅ Test updates detected"
+        COMMIT_MSG="test: update ${test_files} test file(s)"
+    elif [ $js_files -gt 2 ]; then
+        echo "⚡ Major JS changes"
+        COMMIT_MSG="feat: significant JavaScript updates"
     else
-        echo "chore: update repository"
+        COMMIT_MSG="chore: various improvements"
     fi
 }
 
-COMMIT_MSG=$(generate_commit_message)
+analyze_changes
 git commit -m "$COMMIT_MSG"</code></pre>
                                 </div>
                                 <button class="btn btn-primary copy-btn">Копировать скрипт</button>
                             </div>
 
-                            <div class="tool-card detailed">
-                                <div class="tool-icon">📝</div>
-                                <h3>Branch Cleaner</h3>
-                                <p>Очистка старых и мердженных веток</p>
+                            <div class="tool-card detailed featured">
+                                <span class="complexity-badge complexity-intermediate">Средний уровень</span>
+                                <div class="tool-icon">🔍</div>
+                                <h3>Git Forensic Analyzer</h3>
+                                <p>Расширенный анализ истории Git для расследования инцидентов</p>
+                                <div class="tool-tags">
+                                    <span class="tool-tag">Forensic</span>
+                                    <span class="tool-tag">Analysis</span>
+                                    <span class="tool-tag">Security</span>
+                                </div>
                                 <div class="tool-code">
                                     <pre><code>#!/bin/bash
-# git-clean-branches.sh
-# Очистка мердженных веток
+# git-forensic-analyzer.sh
+# Расширенный анализ Git истории
 
-echo "🧹 Cleaning merged branches..."
+echo "🕵️ Git Forensic Analysis"
+echo "========================"
 
-# Удаляем локальные ветки, которые уже смержены в main
-git branch --merged main | grep -v "main" | grep -v "master" | xargs -n 1 git branch -d
+# Поиск больших файлов в истории
+echo "📊 Large files in history:"
+git rev-list --objects --all | \
+  git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | \
+  awk '/^blob/ {print $4, $3}' | \
+  sort -k2 -n | tail -10
 
-# Удаляем отслеживание удаленных веток
-git fetch --prune
+# Анализ активности по авторам
+echo "👥 Author activity:"
+git shortlog -s -n --all
 
-# Показываем оставшиеся ветки
-echo "✅ Remaining branches:"
-git branch -a</code></pre>
+# Поиск чувствительных данных
+echo "🔐 Sensitive data scan:"
+git log -p --all -S "password" --name-only
+git log -p --all -S "token" --name-only
+git log -p --all -S "api_key" --name-only
+
+# Визуализация истории
+echo "📈 History visualization:"
+git log --oneline --graph --all -20</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn">Копировать скрипт</button>
+                            </div>
+
+                            <div class="tool-card detailed">
+                                <span class="complexity-badge complexity-advanced">Продвинутый</span>
+                                <div class="tool-icon">⚡</div>
+                                <h3>Git Performance Optimizer</h3>
+                                <p>Оптимизация производительности больших репозиториев</p>
+                                <div class="tool-tags">
+                                    <span class="tool-tag">Performance</span>
+                                    <span class="tool-tag">Optimization</span>
+                                    <span class="tool-tag">Large Repos</span>
+                                </div>
+                                <div class="tool-code">
+                                    <pre><code>#!/bin/bash
+# git-performance-optimizer.sh
+# Оптимизация больших Git репозиториев
+
+echo "⚡ Git Performance Optimization"
+echo "==============================="
+
+# Очистка истории от больших файлов
+echo "🧹 Finding large files..."
+git rev-list --objects --all | \
+  while read commit hash path; do
+    size=$(git cat-file -s $hash 2>/dev/null) || continue
+    if [ $size -gt 1048576 ]; then
+        echo "$size $hash $path"
+    fi
+  done | sort -n
+
+# Оптимизация репозитория
+echo "🔧 Optimizing repository..."
+git gc --aggressive --prune=now
+git repack -a -d --depth=50 --window=100
+
+# Включение файловой системы кэширования
+git config --global core.preloadindex true
+git config --global core.fscache true
+git config --global gc.auto 256
+
+echo "✅ Optimization complete!"</code></pre>
                                 </div>
                                 <button class="btn btn-primary copy-btn">Копировать скрипт</button>
                             </div>
                         </div>
                     </div>
 
+                    <!-- DevOps Tools -->
                     <div class="category-card">
-                        <h2>Полезные Скрипты</h2>
+                        <h2>🛠️ DevOps Инструменты</h2>
                         <div class="tools-grid">
-                            <div class="tool-card detailed">
-                                <div class="tool-icon">📊</div>
-                                <h3>Repo Statistics</h3>
-                                <p>Скрипт для сбора статистики по репозиторию</p>
+                            <div class="tool-card detailed new">
+                                <span class="complexity-badge complexity-beginner">Для начинающих</span>
+                                <div class="tool-icon">🚨</div>
+                                <h3>Smart Monitoring Bot</h3>
+                                <p>Умный мониторинг с автоматическим оповещением в Telegram/Slack</p>
+                                <div class="tool-tags">
+                                    <span class="tool-tag">Monitoring</span>
+                                    <span class="tool-tag">Alerts</span>
+                                    <span class="tool-tag">Bot</span>
+                                </div>
                                 <div class="tool-code">
                                     <pre><code>#!/bin/bash
-# repo-stats.sh
-# Сбор статистики по Git репозиторию
+# smart-monitoring-bot.sh
+# Умный мониторинг системы
 
-echo "📊 Repository Statistics"
-echo "========================"
+check_system() {
+    # Мониторинг CPU
+    local cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2}' | cut -d'%' -f1)
+    local memory_usage=$(free | grep Mem | awk '{print $3/$2 * 100.0}')
+    local disk_usage=$(df / | awk 'END{print $5}' | sed 's/%//')
+    
+    # Проверка порогов
+    if (( $(echo "$cpu_usage > 80" | bc -l) )); then
+        send_alert "🚨 High CPU usage: ${cpu_usage}%"
+    fi
+    
+    if (( $(echo "$memory_usage > 85" | bc -l) )); then
+        send_alert "💾 High memory usage: ${memory_usage}%"
+    fi
+    
+    if [ $disk_usage -gt 90 ]; then
+        send_alert "💿 High disk usage: ${disk_usage}%"
+    fi
+}
 
-# Общее количество коммитов
-total_commits=$(git rev-list --count HEAD)
-echo "Total commits: $total_commits"
+send_alert() {
+    local message=$1
+    # Отправка в Telegram
+    curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+        -d chat_id="$TELEGRAM_CHAT_ID" \
+        -d text="$message" \
+        -d parse_mode="Markdown"
+}
 
-# Количество contributors
-contributors=$(git shortlog -s -n | wc -l)
-echo "Contributors: $contributors"
+# Бесконечный мониторинг
+while true; do
+    check_system
+    sleep 300  # Проверка каждые 5 минут
+done</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn">Копировать скрипт</button>
+                            </div>
 
-# Первый коммит
-first_commit=$(git log --reverse --format="%cd" --date=short | head -1)
-echo "First commit: $first_commit"
+                            <div class="tool-card detailed featured">
+                                <span class="complexity-badge complexity-intermediate">Средний уровень</span>
+                                <div class="tool-icon">🔧</div>
+                                <h3>Kubernetes Auto-Healer</h3>
+                                <p>Автоматическое лечение падающих подов в Kubernetes</p>
+                                <div class="tool-tags">
+                                    <span class="tool-tag">Kubernetes</span>
+                                    <span class="tool-tag">Auto-healing</span>
+                                    <span class="tool-tag">DevOps</span>
+                                </div>
+                                <div class="tool-code">
+                                    <pre><code>#!/bin/bash
+# k8s-auto-healer.sh
+# Автоматическое лечение Kubernetes подов
 
-# Активность по дням
-echo "Activity by day:"
-git log --format="%ad" --date=short | sort | uniq -c | sort -nr | head -10</code></pre>
+NAMESPACE=${1:-default}
+HEALTH_CHECK_INTERVAL=30
+
+echo "🏥 Kubernetes Auto-Healer started for namespace: $NAMESPACE"
+
+while true; do
+    # Получаем список подов с проблемами
+    FAILING_PODS=$(kubectl get pods -n $NAMESPACE --field-selector=status.phase=Failed --no-headers | awk '{print $1}')
+    CRASHLOOP_PODS=$(kubectl get pods -n $NAMESPACE --no-headers | grep CrashLoopBackOff | awk '{print $1}')
+    
+    # Лечение подов в Failed состоянии
+    for pod in $FAILING_PODS; do
+        echo "🔄 Restarting failed pod: $pod"
+        kubectl delete pod -n $NAMESPACE $pod
+    done
+    
+    # Анализ подов в CrashLoopBackOff
+    for pod in $CRASHLOOP_PODS; do
+        echo "🔍 Analyzing crashlooping pod: $pod"
+        
+        # Получаем логи для анализа
+        POD_LOGS=$(kubectl logs -n $NAMESPACE $pod --tail=50 2>&1)
+        
+        # Простой анализ ошибок
+        if echo "$POD_LOGS" | grep -q "OutOfMemory"; then
+            echo "💾 Memory issue detected in $pod - increasing resources"
+            # Здесь может быть логика увеличения ресурсов
+        elif echo "$POD_LOGS" | grep -q "Connection refused"; then
+            echo "🌐 Network issue detected in $pod - checking dependencies"
+        fi
+        
+        # Перезапуск пода после анализа
+        kubectl delete pod -n $NAMESPACE $pod
+    done
+    
+    sleep $HEALTH_CHECK_INTERVAL
+done</code></pre>
                                 </div>
                                 <button class="btn btn-primary copy-btn">Копировать скрипт</button>
                             </div>
 
                             <div class="tool-card detailed">
-                                <div class="tool-icon">🔍</div>
-                                <h3>Code Search</h3>
-                                <p>Расширенный поиск по кодовой базе</p>
+                                <span class="complexity-badge complexity-advanced">Продвинутый</span>
+                                <div class="tool-icon">🌐</div>
+                                <h3>Multi-Region Deployment</h3>
+                                <p>Автоматическое развертывание в нескольких регионах с балансировкой</p>
+                                <div class="tool-tags">
+                                    <span class="tool-tag">Multi-region</span>
+                                    <span class="tool-tag">Load Balancing</span>
+                                    <span class="tool-tag">Global</span>
+                                </div>
                                 <div class="tool-code">
                                     <pre><code>#!/bin/bash
-# code-search.sh
-# Расширенный поиск по репозиторию
+# multi-region-deploy.sh
+# Развертывание в нескольких регионах
 
-search_pattern=$1
-file_type=$2
+REGIONS=("us-east-1" "eu-west-1" "ap-southeast-1" "sa-east-1")
+APP_VERSION="v1.2.3"
 
-if [ -z "$search_pattern" ]; then
-    echo "Usage: $0 <search_pattern> [file_type]"
-    exit 1
-fi
+deploy_to_region() {
+    local region=$1
+    echo "🚀 Deploying to region: $region"
+    
+    # Установка контекста региона
+    export AWS_DEFAULT_REGION=$region
+    
+    # Деплой приложения
+    aws ecr get-login-password | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$region.amazonaws.com
+    docker build -t myapp:$APP_VERSION .
+    docker tag myapp:$APP_VERSION $ACCOUNT_ID.dkr.ecr.$region.amazonaws.com/myapp:$APP_VERSION
+    docker push $ACCOUNT_ID.dkr.ecr.$region.amazonaws.com/myapp:$APP_VERSION
+    
+    # Обновление ECS сервиса
+    aws ecs update-service --cluster my-cluster --service my-service --force-new-deployment
+    
+    # Проверка здоровья
+    until aws ecs describe-services --cluster my-cluster --services my-service | grep -q "STEADY_STATE"; do
+        echo "⏳ Waiting for $region deployment to stabilize..."
+        sleep 10
+    done
+    
+    echo "✅ Deployment to $region completed successfully"
+}
 
-echo "🔍 Searching for: $search_pattern"
+# Параллельный деплой во все регионы
+for region in "${REGIONS[@]}"; do
+    deploy_to_region "$region" &
+done
 
-if [ -n "$file_type" ]; then
-    git grep -n "$search_pattern" -- "*.$file_type"
-else
-    git grep -n "$search_pattern"
-fi
+# Ожидание завершения всех деплоев
+wait
 
-# Статистика найденных вхождений
-echo "📈 Search results:"
-git grep --count "$search_pattern"</code></pre>
+echo "🎉 Multi-region deployment completed!"</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn">Копировать скрипт</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI & ML Tools -->
+                    <div class="category-card">
+                        <h2>🧠 AI & ML Инструменты</h2>
+                        <div class="tools-grid">
+                            <div class="tool-card detailed new">
+                                <span class="complexity-badge complexity-beginner">Для начинающих</span>
+                                <div class="tool-icon">🤖</div>
+                                <h3>ML Model Auto-Trainer</h3>
+                                <p>Автоматическое обучение ML моделей с подбором гиперпараметров</p>
+                                <div class="tool-tags">
+                                    <span class="tool-tag">Machine Learning</span>
+                                    <span class="tool-tag">AutoML</span>
+                                    <span class="tool-tag">Training</span>
+                                </div>
+                                <div class="tool-code">
+                                    <pre><code>#!/bin/bash
+# ml-auto-trainer.sh
+# Автоматическое обучение ML моделей
+
+DATASET_PATH="./data/training.csv"
+MODEL_TYPES=("random_forest" "xgboost" "neural_network")
+HYPERPARAM_GRID=(
+    "learning_rate=0.1,0.01,0.001"
+    "n_estimators=100,200,500"
+    "max_depth=3,5,7,10"
+)
+
+auto_train_model() {
+    local model_type=$1
+    echo "🧠 Training $model_type model..."
+    
+    python3 - << EOF
+import pandas as pd
+from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
+from sklearn.neural_network import MLPClassifier
+import joblib
+
+# Загрузка данных
+data = pd.read_csv("$DATASET_PATH")
+X = data.drop('target', axis=1)
+y = data['target']
+
+# Выбор модели
+if "$model_type" == "random_forest":
+    model = RandomForestClassifier()
+    param_grid = {
+        'n_estimators': [100, 200, 500],
+        'max_depth': [3, 5, 7, 10]
+    }
+elif "$model_type" == "xgboost":
+    model = XGBClassifier()
+    param_grid = {
+        'learning_rate': [0.1, 0.01, 0.001],
+        'n_estimators': [100, 200, 500]
+    }
+else:
+    model = MLPClassifier()
+    param_grid = {
+        'hidden_layer_sizes': [(50,), (100,), (50, 50)],
+        'alpha': [0.0001, 0.001, 0.01]
+    }
+
+# Поиск лучших параметров
+grid_search = GridSearchCV(model, param_grid, cv=5, scoring='accuracy')
+grid_search.fit(X, y)
+
+# Сохранение лучшей модели
+best_model = grid_search.best_estimator_
+joblib.dump(best_model, f"${model_type}_best_model.pkl")
+
+print(f"✅ Best {model_type} model saved with score: {grid_search.best_score_:.4f}")
+EOF
+}
+
+# Обучение всех типов моделей
+for model_type in "${MODEL_TYPES[@]}"; do
+    auto_train_model "$model_type"
+done
+
+echo "🎉 All models trained successfully!"</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn">Копировать скрипт</button>
+                            </div>
+
+                            <div class="tool-card detailed featured">
+                                <span class="complexity-badge complexity-intermediate">Средний уровень</span>
+                                <div class="tool-icon">📊</div>
+                                <h3>Data Pipeline Automator</h3>
+                                <p>Автоматизация ETL пайплайнов с мониторингом качества данных</p>
+                                <div class="tool-tags">
+                                    <span class="tool-tag">ETL</span>
+                                    <span class="tool-tag">Data Pipeline</span>
+                                    <span class="tool-tag">Quality</span>
+                                </div>
+                                <div class="tool-code">
+                                    <pre><code>#!/bin/bash
+# data-pipeline-automator.sh
+# Автоматизация ETL пайплайнов
+
+CONFIG_FILE="./pipeline_config.json"
+LOG_FILE="./pipeline_$(date +%Y%m%d_%H%M%S).log"
+
+run_data_quality_checks() {
+    local dataset=$1
+    echo "🔍 Running data quality checks for: $dataset"
+    
+    python3 - << EOF
+import pandas as pd
+import json
+
+def check_data_quality(df, dataset_name):
+    checks = {
+        'total_rows': len(df),
+        'null_percentage': df.isnull().mean().to_dict(),
+        'duplicate_rows': df.duplicated().sum(),
+        'data_types': df.dtypes.astype(str).to_dict()
+    }
+    
+    # Проверка аномалий в числовых колонках
+    numeric_cols = df.select_dtypes(include=['number']).columns
+    for col in numeric_cols:
+        q1 = df[col].quantile(0.25)
+        q3 = df[col].quantile(0.75)
+        iqr = q3 - q1
+        outliers = df[(df[col] < q1 - 1.5*iqr) | (df[col] > q3 + 1.5*iqr)]
+        checks[f'{col}_outliers'] = len(outliers)
+    
+    return checks
+
+# Загрузка и проверка данных
+df = pd.read_csv("$dataset")
+quality_report = check_data_quality(df, "$dataset")
+
+# Сохранение отчета
+with open("quality_report.json", "w") as f:
+    json.dump(quality_report, f, indent=2)
+
+print("✅ Data quality check completed")
+EOF
+}
+
+# Основной ETL пайплайн
+echo "🔄 Starting ETL Pipeline..."
+
+# Extract
+echo "📥 Extracting data from sources..."
+# Логика экстракции данных
+
+# Transform
+echo "🛠️ Transforming data..."
+run_data_quality_checks "raw_data.csv"
+
+# Load
+echo "📤 Loading data to destination..."
+# Логика загрузки данных
+
+echo "🎉 ETL Pipeline completed successfully!"</code></pre>
+                                </div>
+                                <button class="btn btn-primary copy-btn">Копировать скрипт</button>
+                            </div>
+
+                            <div class="tool-card detailed">
+                                <span class="complexity-badge complexity-advanced">Продвинутый</span>
+                                <div class="tool-icon">⚡</div>
+                                <h3>Real-time AI Inference</h3>
+                                <p>Система реального времени для инференса ML моделей с масштабированием</p>
+                                <div class="tool-tags">
+                                    <span class="tool-tag">Real-time</span>
+                                    <span class="tool-tag">Inference</span>
+                                    <span class="tool-tag">Scalability</span>
+                                </div>
+                                <div class="tool-code">
+                                    <pre><code>#!/bin/bash
+# real-time-inference.sh
+# Система реального времени для ML инференса
+
+MODEL_SERVERS=("server1:8000" "server2:8000" "server3:8000")
+CURRENT_SERVER=0
+BATCH_SIZE=32
+MAX_RETRIES=3
+
+load_balancer() {
+    local request_data=$1
+    local retry_count=0
+    
+    while [ $retry_count -lt $MAX_RETRIES ]; do
+        local server=${MODEL_SERVERS[$CURRENT_SERVER]}
+        echo "🔄 Sending request to: $server"
+        
+        response=$(curl -s -X POST \
+            -H "Content-Type: application/json" \
+            -d "$request_data" \
+            --connect-timeout 10 \
+            --max-time 30 \
+            "http://$server/predict")
+        
+        if [ $? -eq 0 ] && [ -n "$response" ]; then
+            echo "✅ Success from $server"
+            echo "$response"
+            return 0
+        else
+            echo "❌ Failed to get response from $server"
+            ((CURRENT_SERVER = (CURRENT_SERVER + 1) % ${#MODEL_SERVERS[@]}))
+            ((retry_count++))
+        fi
+    done
+    
+    echo "💥 All servers failed after $MAX_RETRIES retries"
+    return 1
+}
+
+# Мониторинг здоровья серверов
+health_check() {
+    for server in "${MODEL_SERVERS[@]}"; do
+        if curl -s --connect-timeout 5 "http://$server/health" > /dev/null; then
+            echo "🟢 $server is healthy"
+        else
+            echo "🔴 $server is down"
+        fi
+    done
+}
+
+# Основной цикл обработки запросов
+echo "🚀 Starting real-time inference system..."
+health_check
+
+while true; do
+    # Чтение входных данных (например, из Kafka, Redis или очереди)
+    # request_data=$(read_from_queue)
+    
+    # Обработка запроса через балансировщик
+    # result=$(load_balancer "$request_data")
+    
+    # Отправка результата
+    # send_result "$result"
+    
+    sleep 0.1  # Поддержка высокой частоты запросов
+done</code></pre>
                                 </div>
                                 <button class="btn btn-primary copy-btn">Копировать скрипт</button>
                             </div>
@@ -237,14 +722,57 @@ git grep --count "$search_pattern"</code></pre>
         <footer class="footer">
             <div class="container">
                 <div class="footer-content">
-                    <div class="footer-brand">Githsz</div>
-                    <p class="footer-text">2024 © Fullstack GitHub Developer</p>
+                    <div class="footer-section">
+                        <h3>Githsz</h3>
+                        <p>Полезные инструменты и ресурсы для разработчиков</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Быстрые ссылки</h4>
+                        <a href="icons.html" class="footer-link">Иконки</a>
+                        <a href="tools.html" class="footer-link">Инструменты</a>
+                        <a href="components.html" class="footer-link">Компоненты</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Ресурсы</h4>
+                        <a href="utilities.html" class="footer-link">Утилиты</a>
+                        <a href="contact.html" class="footer-link">Контакты</a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Githsz. Все права защищены.</p>
                 </div>
             </div>
         </footer>
     </div>
 
-    <script src="js/main.js"></script>
-    <script src="js/tools.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // Функционал копирования кода
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.previousElementSibling.querySelector('code');
+                    const codeText = codeBlock.textContent;
+                    
+                    navigator.clipboard.writeText(codeText).then(() => {
+                        // Визуальная обратная связь
+                        const originalText = this.textContent;
+                        this.textContent = 'Скопировано!';
+                        this.classList.add('copied');
+                        
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                            this.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Ошибка копирования: ', err);
+                        this.textContent = 'Ошибка!';
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

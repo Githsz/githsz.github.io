@@ -1,8 +1,7 @@
 /* CSS Variables for Tools */
 :root {
-    --new-badge-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --new-border-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-    --pulse-animation: pulse 2s infinite;
+    --tool-new-accent: linear-gradient(135deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7);
+    --tool-new-border: linear-gradient(90deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7, #FF6B6B);
 }
 
 /* Tools Categories */
@@ -12,83 +11,28 @@
     gap: 4rem;
 }
 
+.category-card {
+    background: var(--bg-surface);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    border: 1px solid var(--bg-surface-variant);
+    position: relative;
+}
+
 .category-card h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: 2rem;
     color: var(--text-primary);
-    text-align: center;
-    position: relative;
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 0.5rem;
     display: inline-block;
-    left: 50%;
-    transform: translateX(-50%);
 }
 
-.category-card h2::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    border-radius: 2px;
-}
-
-/* New Tool Badge */
-.new-tool-badge {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background: var(--new-badge-gradient);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    z-index: 2;
-    animation: var(--pulse-animation);
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-/* Special New Tool Cards */
-.tool-card.new-feature {
-    position: relative;
-    border: 2px solid transparent;
-    background: linear-gradient(var(--bg-surface), var(--bg-surface)) padding-box,
-                var(--new-border-gradient) border-box;
-    animation: borderGlow 3s ease-in-out infinite;
-}
-
-@keyframes borderGlow {
-    0%, 100% { 
-        box-shadow: 0 0 20px rgba(102, 126, 234, 0.3),
-                    inset 0 0 20px rgba(102, 126, 234, 0.1);
-    }
-    50% { 
-        box-shadow: 0 0 40px rgba(102, 126, 234, 0.6),
-                    inset 0 0 30px rgba(102, 126, 234, 0.2);
-    }
-}
-
-.tool-card.new-feature::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--new-border-gradient);
-    animation: gradientShift 3s ease-in-out infinite;
-}
-
-@keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+/* Tools Grid */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
 }
 
 /* Enhanced Tool Cards */
@@ -101,6 +45,9 @@
     border: 1px solid transparent;
     position: relative;
     overflow: hidden;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
 }
 
 .tool-card::before {
@@ -125,21 +72,75 @@
     box-shadow: var(--shadow-3);
 }
 
+.tool-card.detailed {
+    text-align: left;
+}
+
+/* New Tool Cards with Special Styling */
+.tool-card.new {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(var(--bg-surface), var(--bg-surface)) padding-box,
+                var(--tool-new-border) border-box;
+    background-size: 200% 200%;
+    animation: gradient-border 3s ease infinite;
+}
+
+.tool-card.new::before {
+    display: none;
+}
+
+.tool-card.new::after {
+    content: '🆕 Новинка!';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--tool-new-accent);
+    color: var(--text-on-accent);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    z-index: 2;
+    animation: pulse 2s ease-in-out infinite;
+    box-shadow: var(--shadow-2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes gradient-border {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1); 
+        box-shadow: var(--shadow-2);
+    }
+    50% { 
+        transform: scale(1.05); 
+        box-shadow: 0 0 20px rgba(187, 134, 252, 0.4);
+    }
+}
+
 .tool-icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-bottom: 1rem;
+    display: block;
 }
 
 .tool-card h3 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     margin-bottom: 1rem;
     color: var(--text-primary);
+    line-height: 1.3;
 }
 
 .tool-card p {
     color: var(--text-secondary);
     margin-bottom: 1.5rem;
-    line-height: 1.6;
+    line-height: 1.5;
+    flex-grow: 1;
 }
 
 .tool-link {
@@ -165,11 +166,7 @@
     transform: translateX(4px);
 }
 
-/* Detailed Tool Cards */
-.tool-card.detailed {
-    text-align: left;
-}
-
+/* Tool Code Blocks */
 .tool-code {
     background: var(--bg-primary);
     border-radius: var(--border-radius-sm);
@@ -178,83 +175,171 @@
     overflow-x: auto;
     border: 1px solid var(--bg-surface-variant);
     position: relative;
+    flex-grow: 1;
 }
 
 .tool-code pre {
     margin: 0;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     line-height: 1.4;
     white-space: pre-wrap;
     word-wrap: break-word;
+    min-height: 120px;
 }
 
 .tool-code code {
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    display: block;
 }
 
 /* Copy Button Styles */
 .copy-btn {
-    margin-top: 1rem;
-    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-top: auto;
 }
 
-/* Code Highlighting */
-.code-keyword {
-    color: var(--primary);
-    font-weight: bold;
+.copy-btn::before {
+    content: '📋';
+    margin-right: 8px;
 }
 
-.code-comment {
+.copy-btn.copied::before {
+    content: '✅';
+}
+
+.copy-btn.copied {
+    background: var(--secondary);
+    transform: scale(0.98);
+}
+
+/* Tool Tags */
+.tool-tags {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.tool-tag {
+    padding: 4px 8px;
+    background: var(--bg-surface-variant);
+    border-radius: var(--border-radius-sm);
+    font-size: 0.7rem;
     color: var(--text-secondary);
-    font-style: italic;
+    white-space: nowrap;
 }
 
-.code-string {
-    color: var(--secondary);
+.tool-tag.new {
+    background: var(--primary);
+    color: var(--text-on-accent);
 }
 
-.code-variable {
-    color: #CF6679;
+/* Tool Stats */
+.tool-stats {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
 }
 
-.code-number {
-    color: #BB86FC;
-}
-
-/* Tools Grid Layout */
-.tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+.tool-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
 }
 
 /* Responsive Design for Tools */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .tools-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .tools-categories {
+        gap: 2rem;
+    }
+    
+    .category-card {
+        padding: 1.5rem;
     }
     
     .category-card h2 {
-        font-size: 2rem;
+        font-size: 1.5rem;
+    }
+    
+    .tools-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
     
     .tool-card {
         padding: 1.5rem;
+        min-height: auto;
+    }
+    
+    .tool-card.new::after {
+        top: 10px;
+        right: 10px;
+        font-size: 0.7rem;
+        padding: 4px 10px;
+    }
+    
+    .tool-code pre {
+        font-size: 0.75rem;
     }
 }
 
 @media (max-width: 480px) {
-    .tools-categories {
-        gap: 3rem;
+    .category-card {
+        padding: 1rem;
     }
     
     .tool-card {
         padding: 1rem;
     }
     
-    .new-tool-badge {
+    .tool-code {
+        padding: 0.75rem;
+    }
+    
+    .tool-code pre {
         font-size: 0.7rem;
-        padding: 3px 8px;
+    }
+    
+    .tool-icon {
+        font-size: 2rem;
+    }
+    
+    .tool-card h3 {
+        font-size: 1.1rem;
+    }
+}
+
+/* High DPI displays optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .tool-card.new::after {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .tool-card.new {
+        animation: none;
+        background: var(--bg-surface);
+        border: 2px solid var(--primary);
+    }
+    
+    .tool-card.new::after {
+        animation: none;
+    }
+    
+    .tool-card:hover {
+        transform: none;
     }
 }

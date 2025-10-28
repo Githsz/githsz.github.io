@@ -1,37 +1,31 @@
 /* tools.css - Стили для страницы инструментов */
 
-/* Категории инструментов */
-.tools-categories {
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-}
-
-.category-card {
-    background: var(--bg-surface);
-    border-radius: var(--border-radius-lg);
-    padding: 3rem;
-    border: 1px solid var(--bg-surface-variant);
+/* Специальные стили для новых инструментов */
+.tool-card.new {
     position: relative;
+    border: 2px solid;
+    border-image: linear-gradient(45deg, var(--primary), var(--secondary), #ff6b6b, #ffd93d) 1;
+    animation: borderPulse 2s ease-in-out infinite;
 }
 
-.category-card h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: var(--text-primary);
-    text-align: center;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.tool-card.new::before {
+    content: '✨ Новинка';
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--text-on-accent);
+    padding: 6px 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 12px;
+    z-index: 2;
+    box-shadow: var(--shadow-2);
 }
 
-/* Специальные карточки с анимированной границей */
 .tool-card.featured {
     position: relative;
-    background: var(--bg-surface);
-    border-radius: var(--border-radius-lg);
-    padding: 2.5rem;
+    background: linear-gradient(135deg, var(--bg-surface), rgba(187, 134, 252, 0.05));
     border: 2px solid transparent;
     background-clip: padding-box;
 }
@@ -39,236 +33,59 @@
 .tool-card.featured::before {
     content: '';
     position: absolute;
-    inset: -2px;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
     border-radius: var(--border-radius-lg);
-    padding: 2px;
-    background: linear-gradient(45deg, var(--primary), var(--secondary), var(--primary));
-    background-size: 200% 200%;
-    -webkit-mask: 
-        linear-gradient(#fff 0 0) content-box, 
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: borderFlow 3s ease-in-out infinite;
+    z-index: -1;
+    animation: borderRotate 3s linear infinite;
 }
 
-.tool-card.new {
-    position: relative;
-    background: var(--bg-surface);
-    border-radius: var(--border-radius-lg);
-    padding: 2.5rem;
-    border: 2px solid transparent;
-    background-clip: padding-box;
-}
-
-.tool-card.new::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: var(--border-radius-lg);
-    padding: 2px;
-    background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
-    background-size: 300% 300%;
-    -webkit-mask: 
-        linear-gradient(#fff 0 0) content-box, 
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: rainbowBorder 4s ease-in-out infinite;
-}
-
-.tool-card.new::after {
-    content: '✨ Новинка';
-    position: absolute;
-    top: -10px;
-    right: 20px;
-    background: linear-gradient(135deg, #ff6b6b, #ffd93d);
-    color: var(--text-on-accent);
-    padding: 8px 16px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    border-radius: 20px;
-    z-index: 2;
-    box-shadow: var(--shadow-2);
-    animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes borderFlow {
+@keyframes borderPulse {
     0%, 100% {
-        background-position: 0% 50%;
+        border-image-source: linear-gradient(45deg, var(--primary), var(--secondary));
     }
     50% {
-        background-position: 100% 50%;
+        border-image-source: linear-gradient(45deg, var(--secondary), var(--primary));
     }
 }
 
-@keyframes rainbowBorder {
-    0%, 100% {
-        background-position: 0% 50%;
+@keyframes borderRotate {
+    0% {
+        transform: rotate(0deg);
     }
-    25% {
-        background-position: 100% 50%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    75% {
-        background-position: 0% 100%;
+    100% {
+        transform: rotate(360deg);
     }
 }
 
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow: var(--shadow-2);
-    }
-    50% {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
-    }
-}
-
-/* Улучшенные карточки инструментов */
-.tool-card {
-    background: var(--bg-surface);
-    border-radius: var(--border-radius-lg);
-    padding: 2.5rem;
-    text-align: center;
-    transition: all 0.4s ease;
-    border: 1px solid transparent;
-    position: relative;
-    overflow: hidden;
-}
-
-.tool-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    transform: scaleX(0);
-    transition: transform 0.4s ease;
-}
-
-.tool-card:hover::before {
-    transform: scaleX(1);
-}
-
-.tool-card:hover {
-    transform: translateY(-8px);
-    border-color: var(--primary);
-    box-shadow: var(--shadow-3);
-}
-
-.tool-icon {
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
-    transition: transform 0.3s ease;
-}
-
-.tool-card:hover .tool-icon {
-    transform: scale(1.1) rotate(5deg);
-}
-
-.tool-card h3 {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-    font-weight: 700;
-}
-
-.tool-card p {
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-    line-height: 1.7;
-    font-size: 1.1rem;
-}
-
-.tool-code {
-    background: var(--bg-primary);
-    border-radius: var(--border-radius-md);
-    padding: 1.5rem;
-    margin: 1.5rem 0;
-    overflow-x: auto;
-    border: 1px solid var(--bg-surface-variant);
-    position: relative;
-    text-align: left;
-}
-
-.tool-code pre {
-    margin: 0;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
-.tool-code code {
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-}
-
-/* Кнопки копирования */
-.copy-btn {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.copy-btn::after {
-    content: '📋';
-    margin-left: 0.5rem;
-    transition: transform 0.3s ease;
-}
-
-.copy-btn.copied {
-    background: var(--secondary);
-    transform: scale(0.95);
-}
-
-.copy-btn.copied::after {
-    content: '✅';
-    transform: scale(1.2);
-}
-
-/* Сетка инструментов */
-.tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2.5rem;
-    margin-top: 2rem;
-}
-
-/* Индикатор сложности */
+/* Бейджи сложности */
 .complexity-badge {
     position: absolute;
     top: 15px;
     left: 15px;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
     font-weight: 600;
     z-index: 2;
-    border: 1px solid;
 }
 
 .complexity-beginner {
-    background: rgba(3, 218, 198, 0.1);
-    color: var(--secondary);
-    border-color: var(--secondary);
+    background: var(--secondary);
+    color: var(--text-on-accent);
 }
 
 .complexity-intermediate {
-    background: rgba(187, 134, 252, 0.1);
-    color: var(--primary);
-    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--text-on-accent);
 }
 
 .complexity-advanced {
-    background: rgba(207, 102, 121, 0.1);
-    color: #CF6679;
-    border-color: #CF6679;
+    background: #CF6679;
+    color: var(--text-on-accent);
 }
 
 /* Теги инструментов */
@@ -281,82 +98,9 @@
 }
 
 .tool-tag {
-    padding: 4px 12px;
+    padding: 2px 8px;
     background: var(--bg-surface-variant);
-    border-radius: 20px;
-    font-size: 0.8rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
     color: var(--text-secondary);
-    border: 1px solid transparent;
-    transition: all 0.3s ease;
 }
-
-.tool-tag:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .tools-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .category-card {
-        padding: 2rem 1.5rem;
-    }
-    
-    .tool-card {
-        padding: 2rem 1.5rem;
-    }
-    
-    .category-card h2 {
-        font-size: 2rem;
-    }
-    
-    .tool-card.new::after {
-        right: 10px;
-        font-size: 0.7rem;
-        padding: 6px 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    .tools-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .category-card {
-        padding: 1.5rem 1rem;
-    }
-    
-    .tool-card {
-        padding: 1.5rem 1rem;
-    }
-    
-    .tool-icon {
-        font-size: 3rem;
-    }
-}
-
-/* Анимация появления карточек */
-@keyframes cardAppear {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.tool-card {
-    animation: cardAppear 0.6s ease-out;
-}
-
-.tool-card:nth-child(2) { animation-delay: 0.1s; }
-.tool-card:nth-child(3) { animation-delay: 0.2s; }
-.tool-card:nth-child(4) { animation-delay: 0.3s; }
-.tool-card:nth-child(5) { animation-delay: 0.4s; }
-.tool-card:nth-child(6) { animation-delay: 0.5s; }

@@ -5,89 +5,243 @@ class ToolsManager {
     }
 
     init() {
+        this.initNavigation();
         this.initCopyButtons();
         this.initCodeHighlighting();
-        this.initNewFeatureCards();
+        this.initToolFilters();
+    }
+
+    initNavigation() {
+        // Инициализация мобильного меню
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navToggle.classList.toggle('active');
+                
+                // Блокировка скролла при открытом меню
+                if (navMenu.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Закрытие меню при клике на ссылку
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // Закрытие меню при ресайзе
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
     }
 
     initCopyButtons() {
         document.querySelectorAll('.copy-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const codeBlock = e.target.closest('.tool-card').querySelector('code');
+                e.preventDefault();
+                const toolCard = e.target.closest('.tool-card');
+                const codeBlock = toolCard?.querySelector('code');
+                
                 if (codeBlock) {
                     this.copyToClipboard(codeBlock.textContent);
-                    this.showNotification('Код скопирован в буфер обмена!', 'success');
+                    this.showNotification('✅ Код скопирован в буфер обмена!', 'success');
+                    
+                    // Визуальная обратная связь
+                    const originalText = btn.textContent;
+                    const originalHTML = btn.innerHTML;
+                    
+                    btn.innerHTML = '<span>✅ Скопировано!</span>';
+                    btn.classList.add('copied');
+                    btn.disabled = true;
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.classList.remove('copied');
+                        btn.disabled = false;
+                    }, 2000);
                 }
             });
         });
     }
 
     initCodeHighlighting() {
-        // Простая подсветка синтаксиса
-        document.querySelectorAll('code').forEach(code => {
-            const text = code.textContent;
-            // Подсветка ключевых слов
-            let highlighted = text
-                .replace(/(name:|on:|jobs:|steps:|uses:|run:|with:|env:|if:|needs:)/g, '<span class="code-keyword">$1</span>')
-                .replace(/(#.*$)/gm, '<span class="code-comment">$1</span>')
-                .replace(/(".*?")/g, '<span class="code-string">$1</span>')
-                .replace(/(\$\{\{.*?\}\})/g, '<span class="code-variable">$1</span>')
-                .replace(/(\b\d+\b)/g, '<span class="code-number">$1</span>');
+        // Улучшенная подсветка синтаксиса
+        document.querySelectorAll('.tool-code code').forEach(code => {
+            const text = code.textContent || code.innerText;
             
+            let highlighted = text
+                // GitHub Actions ключевые слова
+                .replace(/(name:|on:|jobs:|steps:|uses:|run:|with:|env:|secrets:|if:|needs:)/g, '<span class="code-keyword">$1</span>')
+                // Комментарии
+                .replace(/(#.*$)/gm, '<span class="code-comment">$1</span>')
+                // Строки в кавычках
+                .replace(/("[^"]*"|'[^']*')/g, '<span class="code-string">$1</span>')
+                // Переменные GitHub
+                .replace(/(\$\{\{\s*[^}]+\s*\}\})/g, '<span class="code-variable">$1</span>')
+                // Номера версий
+                .replace(/(@v\d+)/g, '<span class="code-number">$1</span>')
+                // Ветки и теги
+                .replace(/(branches:.*|tags:.*)/g, '<span class="code-string">$1</span>')
+                // Шелл команды
+                .replace(/(echo |git |npm |docker |python )/g, '<span class="code-keyword">$1</span>');
+
             code.innerHTML = highlighted;
         });
     }
 
-    initNewFeatureCards() {
-        // Добавляем дополнительные анимации для новых карточек
-        document.querySelectorAll('.tool-card.new-feature').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-8px) scale(1.02)';
+    initToolFilters() {
+        // Базовая система фильтрации для будущего расширения
+        const filterTags = document.querySelectorAll('.filter-tag');
+        
+        filterTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                const filter = tag.dataset.filter;
+                this.filterTools(filter);
+                
+                // Обновление активного состояния
+                filterTags.forEach(t => t.classList.remove('active'));
+                tag.classList.add('active');
             });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(-5px) scale(1)';
-            });
+        });
+    }
+
+    filterTools(filter) {
+        const tools = document.querySelectorAll('.tool-card');
+        
+        tools.forEach(tool => {
+            if (filter === 'all' || tool.dataset.category === filter) {
+                tool.style.display = 'block';
+                setTimeout(() => {
+                    tool.style.opacity = '1';
+                    tool.style.transform = 'translateY(0)';
+                }, 50);
+            } else {
+                tool.style.opacity = '0';
+                tool.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    tool.style.display = 'none';
+                }, 300);
+            }
         });
     }
 
     copyToClipboard(text) {
-        navigator.clipboard.writeText(text).catch(err => {
-            console.error('Ошибка копирования: ', err);
-            // Fallback
+        // Очистка текста от HTML тегов для чистого копирования
+        const cleanText = text.replace(/<[^>]*>/g, '');
+        
+        if (navigator.clipboard && window.isSecureContext) {
+            return navigator.clipboard.writeText(cleanText);
+        } else {
+            // Fallback для старых браузеров и HTTP
             const textArea = document.createElement('textarea');
-            textArea.value = text;
+            textArea.value = cleanText;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
             document.body.appendChild(textArea);
+            textArea.focus();
             textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-        });
+            
+            return new Promise((res, rej) => {
+                document.execCommand('copy') ? res() : rej();
+                textArea.remove();
+            });
+        }
     }
 
     showNotification(message, type = 'info') {
+        // Удаляем существующие уведомления
+        document.querySelectorAll('.notification').forEach(notification => {
+            notification.remove();
+        });
+
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
-        notification.textContent = message;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <span class="notification-message">${message}</span>
+            </div>
+        `;
+
+        // Стили для уведомления
+        notification.style.cssText = `
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            background: var(--primary);
+            color: var(--text-on-accent);
+            padding: 12px 20px;
+            border-radius: var(--border-radius-md);
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-weight: 600;
+            box-shadow: var(--shadow-3);
+            max-width: 350px;
+            word-wrap: break-word;
+            border-left: 4px solid var(--secondary);
+        `;
+
+        // Стили для разных типов уведомлений
+        if (type === 'success') {
+            notification.style.background = 'var(--secondary)';
+            notification.style.borderLeftColor = 'var(--primary)';
+        } else if (type === 'error') {
+            notification.style.background = '#CF6679';
+            notification.style.borderLeftColor = '#B00020';
+        } else if (type === 'warning') {
+            notification.style.background = '#ff9800';
+            notification.style.borderLeftColor = '#f57c00';
+        }
 
         document.body.appendChild(notification);
 
         // Анимация появления
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             notification.style.transform = 'translateX(0)';
-        }, 100);
+        });
 
         // Автоматическое скрытие
         setTimeout(() => {
-            notification.style.transform = 'translateX(100%)';
+            notification.style.transform = 'translateX(400px)';
             setTimeout(() => {
                 if (notification.parentNode) {
                     notification.parentNode.removeChild(notification);
                 }
             }, 300);
         }, 3000);
+
+        // Закрытие по клику
+        notification.addEventListener('click', () => {
+            notification.style.transform = 'translateX(400px)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        });
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+// Инициализация при полной загрузке DOM
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        new ToolsManager();
+    });
+} else {
     new ToolsManager();
-});
+}

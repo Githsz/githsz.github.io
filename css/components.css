@@ -1,7 +1,7 @@
-/* components.css */
+/* components.css - Полная исправленная версия */
 /* Стили для UI компонентов */
 
-/* Quick Navigation */
+/* Быстрая навигация */
 .quick-nav {
     display: flex;
     gap: 0.5rem;
@@ -15,7 +15,7 @@
     font-size: 0.875rem;
 }
 
-/* Component Categories & Sections */
+/* Категории и секции компонентов */
 .component-category {
     margin-bottom: 4rem;
     padding-bottom: 2rem;
@@ -27,7 +27,7 @@
 }
 
 .component-category h2 {
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 4vw, 2rem);
     margin-bottom: 2rem;
     color: var(--text-primary);
     border-left: 4px solid var(--primary);
@@ -39,29 +39,33 @@
 }
 
 .component-section h3 {
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
     margin-bottom: 1.5rem;
     color: var(--text-primary);
     padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--bg-surface-variant);
 }
 
-/* Component Grid & Cards */
+/* Сетка и карточки компонентов - ИСПРАВЛЕННЫЙ КОД */
 .component-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .component-card {
     background: var(--bg-surface);
     border-radius: var(--border-radius-lg);
-    padding: 1.5rem;
+    padding: clamp(1rem, 3vw, 1.5rem);
     border: 1px solid var(--bg-surface-variant);
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .component-card:hover {
@@ -72,7 +76,7 @@
 
 .component-preview {
     background: var(--bg-primary);
-    padding: 1.5rem;
+    padding: clamp(1rem, 3vw, 1.5rem);
     border-radius: var(--border-radius-md);
     margin-bottom: 1rem;
     display: flex;
@@ -82,11 +86,14 @@
     justify-content: center;
     min-height: 150px;
     border: 1px solid var(--bg-surface-variant);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .component-code {
     margin-bottom: 1rem;
     flex-grow: 1;
+    width: 100%;
 }
 
 .code-scroll-wrapper {
@@ -96,12 +103,14 @@
     background: var(--bg-primary);
     border-radius: var(--border-radius-md);
     border: 1px solid var(--bg-surface-variant);
+    box-sizing: border-box;
 }
 
 .code-scroll-wrapper pre {
     margin: 0;
     min-width: min-content;
     padding: 1rem;
+    width: 100%;
 }
 
 .code-scroll-wrapper code {
@@ -115,6 +124,7 @@
 .copy-btn {
     width: 100%;
     margin-top: auto;
+    box-sizing: border-box;
 }
 
 .copy-btn.copied {
@@ -123,7 +133,7 @@
     border-color: var(--secondary);
 }
 
-/* Component Stats */
+/* Статистика компонентов */
 .component-stats {
     display: flex;
     gap: 1.5rem;
@@ -144,7 +154,7 @@
     border: 1px solid var(--bg-surface-variant);
 }
 
-/* Button Variants */
+/* Варианты кнопок */
 .btn-ghost {
     background: transparent;
     color: var(--text-primary);
@@ -178,7 +188,7 @@
     box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
 }
 
-/* Input Styles */
+/* Стили полей ввода */
 .input {
     width: 100%;
     max-width: 300px;
@@ -190,6 +200,7 @@
     font-size: 1rem;
     transition: all 0.3s ease;
     font-family: inherit;
+    box-sizing: border-box;
 }
 
 .input:focus {
@@ -220,13 +231,15 @@
     box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
-/* Card Styles */
+/* Стили карточек */
 .card {
     background: var(--bg-surface);
     border-radius: var(--border-radius-md);
     border: 1px solid var(--bg-surface-variant);
     overflow: hidden;
     transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .card-header {
@@ -260,7 +273,7 @@
     background: transparent;
 }
 
-/* Modal Styles */
+/* Стили модальных окон */
 .modal {
     display: none;
     position: fixed;
@@ -273,6 +286,7 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .modal.active {
@@ -290,6 +304,7 @@
     animation: modalAppear 0.3s ease;
     max-height: 90vh;
     overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .modal-sm .modal-content {
@@ -323,7 +338,7 @@
     }
 }
 
-/* Tabs Styles */
+/* Стили вкладок */
 .tabs-container {
     width: 100%;
 }
@@ -346,6 +361,7 @@
     margin-bottom: -2px;
     font-family: inherit;
     white-space: nowrap;
+    box-sizing: border-box;
 }
 
 .tab.active {
@@ -363,6 +379,8 @@
     padding: 1.5rem;
     background: var(--bg-surface);
     border-radius: var(--border-radius-md);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .tab-content.active {
@@ -375,7 +393,7 @@
     to { opacity: 1; }
 }
 
-/* Accordion Styles */
+/* Стили аккордеона */
 .accordion {
     width: 100%;
 }
@@ -385,6 +403,8 @@
     border-radius: var(--border-radius-md);
     margin-bottom: 0.5rem;
     overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .accordion-item:first-child {
@@ -410,6 +430,7 @@
     transition: all 0.3s ease;
     font-family: inherit;
     font-size: 1rem;
+    box-sizing: border-box;
 }
 
 .accordion-header:hover {
@@ -435,6 +456,8 @@
     overflow: hidden;
     transition: max-height 0.3s ease;
     background: var(--bg-primary);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .accordion-content.active {
@@ -447,7 +470,7 @@
     line-height: 1.6;
 }
 
-/* Form Components */
+/* Компоненты форм */
 .select {
     width: 100%;
     max-width: 300px;
@@ -459,6 +482,7 @@
     font-size: 1rem;
     transition: all 0.3s ease;
     font-family: inherit;
+    box-sizing: border-box;
 }
 
 .select:focus {
@@ -471,7 +495,7 @@
     height: 120px;
 }
 
-/* Checkbox & Radio */
+/* Чекбоксы и радиокнопки */
 .checkbox,
 .radio {
     display: flex;
@@ -480,6 +504,7 @@
     cursor: pointer;
     padding: 0.5rem 0;
     user-select: none;
+    width: fit-content;
 }
 
 .checkbox input,
@@ -551,10 +576,11 @@
     cursor: not-allowed;
 }
 
-/* Slider Styles */
+/* Стили слайдеров */
 .slider-container {
     width: 100%;
     max-width: 300px;
+    box-sizing: border-box;
 }
 
 .slider {
@@ -564,6 +590,7 @@
     background: var(--bg-surface-variant);
     outline: none;
     -webkit-appearance: none;
+    box-sizing: border-box;
 }
 
 .slider::-webkit-slider-thumb {
@@ -589,12 +616,13 @@
     font-size: 0.9rem;
 }
 
-/* Breadcrumbs */
+/* Хлебные крошки */
 .breadcrumbs {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .breadcrumb-item {
@@ -617,12 +645,14 @@
     color: var(--text-secondary);
 }
 
-/* Pagination */
+/* Пагинация */
 .pagination {
     display: flex;
     gap: 0.25rem;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
 }
 
 .pagination-item {
@@ -636,6 +666,7 @@
     font-family: inherit;
     min-width: 40px;
     text-align: center;
+    box-sizing: border-box;
 }
 
 .pagination-item:hover:not(:disabled) {
@@ -659,10 +690,11 @@
     color: var(--text-secondary);
 }
 
-/* Table Styles */
+/* Стили таблиц */
 .table-container {
     width: 100%;
     overflow-x: auto;
+    box-sizing: border-box;
 }
 
 .table {
@@ -671,6 +703,7 @@
     background: var(--bg-surface);
     border-radius: var(--border-radius-md);
     overflow: hidden;
+    min-width: 600px;
 }
 
 .table th,
@@ -678,6 +711,7 @@
     padding: 12px 16px;
     text-align: left;
     border-bottom: 1px solid var(--bg-surface-variant);
+    box-sizing: border-box;
 }
 
 .table th {
@@ -693,7 +727,7 @@
     background: var(--bg-surface-variant);
 }
 
-/* Badge Styles */
+/* Стили бейджей */
 .badge {
     display: inline-block;
     padding: 4px 8px;
@@ -724,7 +758,7 @@
     color: #2196f3;
 }
 
-/* Progress Bar */
+/* Прогресс бар */
 .progress {
     width: 100%;
     height: 8px;
@@ -732,6 +766,7 @@
     border-radius: 4px;
     overflow: hidden;
     position: relative;
+    box-sizing: border-box;
 }
 
 .progress-bar {
@@ -781,7 +816,7 @@
     }
 }
 
-/* Alert Styles */
+/* Стили уведомлений */
 .alert {
     display: flex;
     align-items: flex-start;
@@ -790,6 +825,8 @@
     border-radius: var(--border-radius-md);
     border-left: 4px solid;
     margin-bottom: 1rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .alert-content {
@@ -836,12 +873,13 @@
     color: #f44336;
 }
 
-/* Toast Container */
+/* Контейнер тостов */
 .toast-container {
     position: fixed;
     z-index: 10001;
     padding: 1rem;
     max-width: 400px;
+    box-sizing: border-box;
 }
 
 .toast-container.top-right {
@@ -876,6 +914,8 @@
     align-items: center;
     gap: 1rem;
     min-width: 300px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .toast.success {
@@ -944,7 +984,7 @@
     }
 }
 
-/* Loading States */
+/* Состояния загрузки */
 .loading {
     position: relative;
     pointer-events: none;
@@ -971,10 +1011,11 @@
     }
 }
 
-/* Responsive Design */
+/* Адаптивный дизайн */
 @media (max-width: 768px) {
     .component-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
     
     .component-preview {
@@ -992,6 +1033,7 @@
         border-radius: 0;
         margin-bottom: 0;
         text-align: left;
+        width: 100%;
     }
     
     .tab:first-child {
@@ -1007,6 +1049,7 @@
     .modal-content {
         margin: 1rem;
         padding: 1.5rem;
+        max-width: calc(100vw - 2rem);
     }
     
     .quick-nav {
@@ -1027,23 +1070,9 @@
         width: 200px;
         justify-content: center;
     }
-}
-
-@media (max-width: 480px) {
-    .component-card {
-        padding: 1rem;
-    }
-    
-    .code-scroll-wrapper code {
-        font-size: 0.7rem;
-    }
-    
-    .toast {
-        min-width: auto;
-        width: calc(100vw - 2rem);
-    }
     
     .table {
+        min-width: 100%;
         font-size: 0.875rem;
     }
     
@@ -1053,7 +1082,39 @@
     }
 }
 
-/* Dark mode adjustments */
+@media (max-width: 480px) {
+    .component-card {
+        padding: 1rem;
+        margin: 0 0.5rem;
+    }
+    
+    .code-scroll-wrapper code {
+        font-size: 0.7rem;
+    }
+    
+    .toast {
+        min-width: auto;
+        width: calc(100vw - 2rem);
+        margin: 0.5rem;
+    }
+    
+    .toast-container {
+        padding: 0.5rem;
+        max-width: 100vw;
+    }
+    
+    .modal-content {
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+    
+    .component-preview {
+        padding: 0.75rem;
+        min-height: 100px;
+    }
+}
+
+/* Темная тема */
 @media (prefers-color-scheme: dark) {
     .input::placeholder {
         color: var(--text-secondary);
@@ -1073,7 +1134,7 @@
     }
 }
 
-/* Print styles */
+/* Стили для печати */
 @media print {
     .component-preview {
         border: 1px solid #ccc;
@@ -1090,7 +1151,7 @@
     }
 }
 
-/* High contrast mode support */
+/* Поддержка высококонтрастного режима */
 @media (prefers-contrast: high) {
     .component-card {
         border: 2px solid;
@@ -1105,7 +1166,7 @@
     }
 }
 
-/* Reduced motion support */
+/* Поддержка reduced motion */
 @media (prefers-reduced-motion: reduce) {
     .component-card,
     .btn,

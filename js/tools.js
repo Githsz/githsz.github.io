@@ -1,4 +1,4 @@
-// tools.js
+// js/tools.js
 class ToolsManager {
     constructor() {
         this.init();
@@ -7,7 +7,7 @@ class ToolsManager {
     init() {
         this.initCopyButtons();
         this.initCodeHighlighting();
-        this.initMobileMenu();
+        this.initNewFeatureCards();
     }
 
     initCopyButtons() {
@@ -24,30 +24,31 @@ class ToolsManager {
 
     initCodeHighlighting() {
         // Простая подсветка синтаксиса
-        document.querySelectorAll('.tool-code code').forEach(code => {
+        document.querySelectorAll('code').forEach(code => {
             const text = code.textContent;
             // Подсветка ключевых слов
             let highlighted = text
-                .replace(/(name:|on:|jobs:|steps:|uses:|run:|with:)/g, '<span class="code-keyword">$1</span>')
+                .replace(/(name:|on:|jobs:|steps:|uses:|run:|with:|env:|if:|needs:)/g, '<span class="code-keyword">$1</span>')
                 .replace(/(#.*$)/gm, '<span class="code-comment">$1</span>')
                 .replace(/(".*?")/g, '<span class="code-string">$1</span>')
                 .replace(/(\$\{\{.*?\}\})/g, '<span class="code-variable">$1</span>')
-                .replace(/(\b(echo|if|then|else|fi|for|in|do|done|while|function)\b)/g, '<span class="code-keyword">$1</span>');
+                .replace(/(\b\d+\b)/g, '<span class="code-number">$1</span>');
             
             code.innerHTML = highlighted;
         });
     }
 
-    initMobileMenu() {
-        const navToggle = document.getElementById('navToggle');
-        const navMenu = document.getElementById('navMenu');
-        
-        if (navToggle && navMenu) {
-            navToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-                navToggle.classList.toggle('active');
+    initNewFeatureCards() {
+        // Добавляем дополнительные анимации для новых карточек
+        document.querySelectorAll('.tool-card.new-feature').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px) scale(1.02)';
             });
-        }
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(-5px) scale(1)';
+            });
+        });
     }
 
     copyToClipboard(text) {
@@ -71,9 +72,9 @@ class ToolsManager {
         document.body.appendChild(notification);
 
         // Анимация появления
-        requestAnimationFrame(() => {
+        setTimeout(() => {
             notification.style.transform = 'translateX(0)';
-        });
+        }, 100);
 
         // Автоматическое скрытие
         setTimeout(() => {
@@ -87,7 +88,6 @@ class ToolsManager {
     }
 }
 
-// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
     new ToolsManager();
 });

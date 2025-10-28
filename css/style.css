@@ -637,243 +637,7 @@ body {
     display: inline-block;
 }
 
-/* Компоненты - мобильные стили */
-.component-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-}
-
-.component-card {
-    background: var(--bg-surface);
-    border-radius: var(--border-radius-lg);
-    padding: 1rem;
-    border: 1px solid var(--bg-surface-variant);
-    transition: all 0.3s ease;
-}
-
-.component-card:hover {
-    border-color: var(--primary);
-    box-shadow: var(--shadow-2);
-}
-
-.component-preview {
-    background: var(--bg-primary);
-    padding: 1rem;
-    border-radius: var(--border-radius-md);
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    min-height: 100px;
-    border: 1px solid var(--bg-surface-variant);
-}
-
-.component-code {
-    margin-bottom: 1rem;
-}
-
-.code-scroll-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    background: var(--bg-primary);
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--bg-surface-variant);
-}
-
-.code-scroll-wrapper pre {
-    margin: 0;
-    min-width: min-content;
-    padding: 1rem;
-}
-
-.code-scroll-wrapper code {
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    font-size: 0.75rem;
-    line-height: 1.3;
-    white-space: pre;
-    word-wrap: normal;
-}
-
-.copy-btn {
-    width: 100%;
-    margin-top: 1rem;
-}
-
-.copy-btn.copied {
-    background: var(--secondary);
-    color: var(--text-on-accent);
-    border-color: var(--secondary);
-}
-
-.card-actions {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    flex-wrap: wrap;
-}
-
-/* Табы для мобильных */
-.tabs-demo .tabs {
-    display: flex;
-    border-bottom: 2px solid var(--bg-surface-variant);
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-}
-
-.tabs-demo .tab {
-    padding: 10px 16px;
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    font-family: inherit;
-    flex: 1;
-    min-width: 80px;
-    text-align: center;
-    font-size: 0.9rem;
-}
-
-.tabs-demo .tab.active {
-    color: var(--primary);
-    border-bottom-color: var(--primary);
-}
-
-.tabs-demo .tab-content {
-    display: none;
-    padding: 1rem;
-    background: var(--bg-surface);
-    border-radius: var(--border-radius-md);
-}
-
-.tabs-demo .tab-content.active {
-    display: block;
-}
-
-/* Аккордеон для мобильных */
-.accordion-demo {
-    width: 100%;
-}
-
-.accordion-item {
-    border: 1px solid var(--bg-surface-variant);
-    border-radius: var(--border-radius-md);
-    margin-bottom: 0.5rem;
-    overflow: hidden;
-}
-
-.accordion-header {
-    width: 100%;
-    padding: 1rem;
-    background: var(--bg-surface);
-    border: none;
-    color: var(--text-primary);
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background 0.3s ease;
-    font-family: inherit;
-    font-size: 0.9rem;
-}
-
-.accordion-header:hover {
-    background: var(--bg-surface-variant);
-}
-
-.accordion-header.active {
-    background: var(--primary);
-    color: var(--text-on-accent);
-}
-
-.accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    background: var(--bg-primary);
-}
-
-.accordion-content p {
-    padding: 1rem;
-    margin: 0;
-    font-size: 0.9rem;
-}
-
-/* Demo Card */
-.demo-card {
-    background: var(--bg-surface);
-    padding: 1.5rem;
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--bg-surface-variant);
-    text-align: center;
-    max-width: 300px;
-    width: 100%;
-}
-
-.demo-card h4 {
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-}
-
-.demo-card p {
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-    line-height: 1.5;
-}
-
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 10000;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.modal-content {
-    background: var(--bg-surface);
-    padding: 2rem;
-    border-radius: var(--border-radius-lg);
-    max-width: 500px;
-    width: 100%;
-    border: 1px solid var(--primary);
-    position: relative;
-    animation: modalAppear 0.3s ease;
-}
-
-@keyframes modalAppear {
-    from {
-        opacity: 0;
-        transform: scale(0.8) translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-.modal-content h3 {
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-}
-
-.modal-content p {
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-}
+/* УДАЛЕНО: Старые стили компонентов - они теперь в components.css */
 
 /* Contact Section */
 .contact-grid {
@@ -1421,101 +1185,6 @@ body {
     background: #ff9800;
 }
 
-/* Components specific styles */
-.tabs {
-    display: flex;
-    border-bottom: 2px solid var(--bg-surface-variant);
-    margin-bottom: 1rem;
-}
-
-.tab {
-    padding: 12px 24px;
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    font-family: inherit;
-}
-
-.tab.active {
-    color: var(--primary);
-    border-bottom-color: var(--primary);
-}
-
-.tab-content {
-    display: none;
-    padding: 1rem;
-    background: var(--bg-surface);
-    border-radius: var(--border-radius-md);
-}
-
-.tab-content.active {
-    display: block;
-}
-
-.accordion-header {
-    width: 100%;
-    padding: 1rem;
-    background: var(--bg-surface);
-    border: none;
-    color: var(--text-primary);
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background 0.3s ease;
-    font-family: inherit;
-}
-
-.accordion-header:hover {
-    background: var(--bg-surface-variant);
-}
-
-.accordion-header.active {
-    background: var(--primary);
-    color: var(--text-on-accent);
-}
-
-.accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    background: var(--bg-primary);
-}
-
-.accordion-content p {
-    padding: 1rem;
-    margin: 0;
-}
-
-.loading {
-    position: relative;
-    pointer-events: none;
-}
-
-.loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 16px;
-    height: 16px;
-    margin: -8px 0 0 -8px;
-    border: 2px solid transparent;
-    border-top: 2px solid currentColor;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 /* Prism theme adjustments */
 .code-container {
     position: relative;
@@ -1531,54 +1200,6 @@ body {
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: 0.85rem;
     line-height: 1.4;
-}
-
-/* Десктоп стили */
-@media (min-width: 768px) {
-    .component-grid {
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        gap: 2rem;
-    }
-    
-    .component-card {
-        padding: 2rem;
-    }
-    
-    .component-preview {
-        padding: 2rem;
-        flex-direction: row;
-        flex-wrap: wrap;
-        min-height: 120px;
-    }
-    
-    .code-scroll-wrapper code {
-        font-size: 0.8rem;
-    }
-    
-    .copy-btn {
-        width: auto;
-        margin-top: 0;
-    }
-    
-    .tabs-demo .tab {
-        padding: 12px 24px;
-        flex: none;
-        min-width: auto;
-    }
-    
-    .accordion-header {
-        font-size: 1rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .component-grid {
-        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-    }
-    
-    .code-scroll-wrapper code {
-        font-size: 0.85rem;
-    }
 }
 
 /* Responsive Design */
@@ -1653,8 +1274,7 @@ body {
         justify-content: center;
     }
 
-    .projects-grid,
-    .component-grid {
+    .projects-grid {
         grid-template-columns: 1fr;
     }
     
@@ -1666,14 +1286,6 @@ body {
     .framework-tab {
         width: 200px;
         text-align: center;
-    }
-    
-    .component-preview {
-        flex-direction: column;
-    }
-    
-    .tool-code {
-        font-size: 0.7rem;
     }
 
     .utilities-grid {
@@ -1699,26 +1311,10 @@ body {
         padding-top: max(1rem, var(--safe-area-inset-top));
     }
 
-    /* Mobile tabs */
-    .tabs {
-        flex-direction: column;
-        border-bottom: none;
-    }
-
-    .tab {
-        border-bottom: 1px solid var(--bg-surface-variant);
-        border-radius: 0;
-        margin-bottom: 0;
-    }
-
-    .tab:first-child {
-        border-top-left-radius: var(--border-radius-md);
-        border-top-right-radius: var(--border-radius-md);
-    }
-
-    .tab:last-child {
-        border-bottom-left-radius: var(--border-radius-md);
-        border-bottom-right-radius: var(--border-radius-md);
+    .notification {
+        right: 10px;
+        left: 10px;
+        max-width: none;
     }
 }
 
@@ -1765,24 +1361,6 @@ body {
     .hero-description {
         font-size: 1rem;
     }
-
-    .notification {
-        right: 10px;
-        left: 10px;
-        max-width: none;
-    }
-
-    .component-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .component-card {
-        padding: 1.5rem;
-    }
-
-    .component-preview {
-        padding: 1rem;
-    }
 }
 
 /* High DPI displays */
@@ -1812,10 +1390,6 @@ body {
     }
 
     .scroll-arrow {
-        animation: none;
-    }
-
-    .loading::after {
         animation: none;
     }
 }
@@ -1851,8 +1425,7 @@ body {
     }
 
     .tool-card,
-    .project-card,
-    .component-card {
+    .project-card {
         border: 1px solid #ccc;
         box-shadow: none;
     }

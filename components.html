@@ -1120,28 +1120,6 @@ Toast.info('Информационное сообщение');</code></pre>
             
             // Инициализация аккордеона
             new Accordion({ container: '#demoAccordion' });
-
-            // Инициализация кнопок копирования
-            document.querySelectorAll('.copy-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const codeBlock = this.closest('.component-card').querySelector('code');
-                    const textArea = document.createElement('textarea');
-                    textArea.value = codeBlock.textContent;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    
-                    const originalText = this.textContent;
-                    this.textContent = 'Скопировано!';
-                    this.classList.add('copied');
-                    
-                    setTimeout(() => {
-                        this.textContent = originalText;
-                        this.classList.remove('copied');
-                    }, 2000);
-                });
-            });
         });
     </script>
 </body>

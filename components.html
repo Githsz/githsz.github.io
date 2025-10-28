@@ -9,184 +9,6 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
-    <style>
-        /* Мобильные стили для кода - как в оригинале */
-        .component-code {
-            position: relative;
-        }
-        .code-scroll-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            background: var(--bg-primary);
-            border-radius: var(--border-radius-md);
-            border: 1px solid var(--bg-surface-variant);
-        }
-        .code-scroll-wrapper pre {
-            margin: 0;
-            min-width: min-content;
-            padding: 1rem;
-        }
-        .code-scroll-wrapper code {
-            font-size: 0.75rem;
-            line-height: 1.3;
-            white-space: pre;
-            word-wrap: normal;
-        }
-        
-        /* Мобильная сетка - как в оригинале */
-        .component-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-        
-        /* Улучшения для мобильных - как в оригинале */
-        .component-card {
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .component-preview {
-            padding: 1rem;
-            min-height: auto;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        
-        .framework-tabs {
-            gap: 0.5rem;
-        }
-        
-        .framework-tab {
-            padding: 10px 16px;
-            font-size: 0.9rem;
-        }
-        
-        .components-showcase {
-            padding: 1rem;
-        }
-        
-        /* Десктоп стили - как в оригинале */
-        @media (min-width: 768px) {
-            .component-grid {
-                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-                gap: 2rem;
-            }
-            
-            .component-card {
-                padding: 2rem;
-            }
-            
-            .component-preview {
-                padding: 2rem;
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-            
-            .code-scroll-wrapper code {
-                font-size: 0.8rem;
-            }
-            
-            .components-showcase {
-                padding: 3rem;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .component-grid {
-                grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            }
-        }
-        
-        .component-badge {
-            display: inline-block;
-            padding: 2px 6px;
-            background: var(--primary);
-            color: var(--text-on-accent);
-            border-radius: 10px;
-            font-size: 0.7rem;
-            margin-left: 6px;
-            vertical-align: middle;
-        }
-        
-        .component-stats {
-            display: flex;
-            gap: 1rem;
-            margin: 1rem 0;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .component-stat {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .copy-btn {
-            width: 100%;
-            margin-top: 1rem;
-        }
-        
-        /* Улучшенные табы для мобильных - как в оригинале */
-        .tabs-demo .tabs {
-            flex-wrap: wrap;
-        }
-        
-        .tabs-demo .tab {
-            flex: 1;
-            min-width: 80px;
-            text-align: center;
-        }
-
-        /* Quick Navigation */
-        .quick-nav {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 0.875rem;
-        }
-
-        /* Component Categories */
-        .component-category {
-            margin-bottom: 4rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--bg-surface-variant);
-        }
-
-        .component-category:last-child {
-            border-bottom: none;
-        }
-
-        .component-category h2 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: var(--text-primary);
-            border-left: 4px solid var(--primary);
-            padding-left: 1rem;
-        }
-
-        .component-section {
-            margin-bottom: 3rem;
-        }
-
-        .component-section h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--bg-surface-variant);
-        }
-    </style>
 </head>
 <body>
     <div class="page-wrapper">
@@ -275,13 +97,14 @@ document.body.appendChild(button.render());</code></pre>
                                     <div class="component-preview">
                                         <button class="btn btn-secondary">Secondary</button>
                                         <button class="btn btn-outline">Outline</button>
+                                        <button class="btn btn-ghost">Ghost</button>
                                         <button class="btn btn-danger">Danger</button>
                                         <button class="btn btn-success">Success</button>
                                     </div>
                                     <div class="component-code">
                                         <div class="code-scroll-wrapper">
                                             <pre><code class="language-javascript">// Различные варианты кнопок
-const variants = ['primary', 'secondary', 'outline', 'danger', 'success'];
+const variants = ['primary', 'secondary', 'outline', 'ghost', 'danger', 'success'];
 variants.forEach(variant => {
     const btn = new Button({
         text: variant,
@@ -304,10 +127,10 @@ variants.forEach(variant => {
                                 <!-- Text Input -->
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <input type="text" class="search-input" placeholder="Обычное поле" style="max-width: 100%; margin: 5px 0;">
-                                        <input type="text" class="search-input" placeholder="Поле с ошибкой" style="max-width: 100%; margin: 5px 0; border-color: #f44336;">
-                                        <input type="text" class="search-input" placeholder="Успешное поле" style="max-width: 100%; margin: 5px 0; border-color: #4caf50;">
-                                        <input type="text" class="search-input" placeholder="Отключенное поле" disabled style="max-width: 100%; margin: 5px 0;">
+                                        <input type="text" class="input" placeholder="Обычное поле">
+                                        <input type="text" class="input input-error" placeholder="Поле с ошибкой" value="Неверное значение">
+                                        <input type="text" class="input input-success" placeholder="Успешное поле" value="Корректное значение">
+                                        <input type="text" class="input" placeholder="Отключенное поле" disabled>
                                     </div>
                                     <div class="component-code">
                                         <div class="code-scroll-wrapper">
@@ -323,7 +146,9 @@ const input = new Input({
         minLength: 3,
         maxLength: 50
     },
-    onChange: (value) => console.log('Value:', value)
+    onChange: (value) => console.log('Value:', value),
+    onFocus: () => console.log('Focused'),
+    onBlur: () => console.log('Blurred')
 });</code></pre>
                                         </div>
                                     </div>
@@ -333,11 +158,11 @@ const input = new Input({
                                 <!-- Input Types -->
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <input type="email" class="search-input" placeholder="Email" style="max-width: 100%; margin: 5px 0;">
-                                        <input type="password" class="search-input" placeholder="Пароль" style="max-width: 100%; margin: 5px 0;">
-                                        <input type="number" class="search-input" placeholder="Число" style="max-width: 100%; margin: 5px 0;">
-                                        <input type="tel" class="search-input" placeholder="Телефон" style="max-width: 100%; margin: 5px 0;">
-                                        <input type="url" class="search-input" placeholder="URL" style="max-width: 100%; margin: 5px 0;">
+                                        <input type="email" class="input" placeholder="Email">
+                                        <input type="password" class="input" placeholder="Пароль">
+                                        <input type="number" class="input" placeholder="Число">
+                                        <input type="tel" class="input" placeholder="Телефон">
+                                        <input type="url" class="input" placeholder="URL">
                                     </div>
                                     <div class="component-code">
                                         <div class="code-scroll-wrapper">
@@ -350,7 +175,18 @@ types.forEach(type => {
         validation: getValidationRules(type)
     });
     form.appendChild(input.render());
-});</code></pre>
+});
+
+function getValidationRules(type) {
+    const rules = {
+        email: { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
+        password: { minLength: 6 },
+        number: { min: 0, max: 100 },
+        tel: { pattern: /^[\+]?[0-9\s\-\(\)]+$/ },
+        url: { pattern: /^https?:\/\/.+/ }
+    };
+    return rules[type] || {};
+}</code></pre>
                                         </div>
                                     </div>
                                     <button class="btn btn-outline copy-btn">Копировать код</button>
@@ -365,12 +201,16 @@ types.forEach(type => {
                                 <!-- Basic Card -->
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <div class="demo-card" style="max-width: 100%;">
-                                            <h4>Заголовок карточки</h4>
-                                            <p>Описание карточки с полезной информацией для пользователя</p>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Заголовок карточки</h3>
+                                            </div>
+                                            <div class="card-content">
+                                                <p>Содержимое карточки с полезной информацией для пользователя.</p>
+                                            </div>
                                             <div class="card-actions">
-                                                <button class="btn btn-primary" style="min-width: 100px;">Действие</button>
-                                                <button class="btn btn-outline" style="min-width: 100px;">Отмена</button>
+                                                <button class="btn btn-primary">Действие</button>
+                                                <button class="btn btn-outline">Отмена</button>
                                             </div>
                                         </div>
                                     </div>
@@ -387,12 +227,13 @@ const card = new Card({
             onClick: () => console.log('Primary action')
         },
         {
-            text: 'Отмена', 
+            text: 'Отмена',
             variant: 'outline',
             onClick: () => console.log('Cancel action')
         }
     ],
-    variant: 'default'
+    variant: 'default',
+    elevation: 1
 });</code></pre>
                                         </div>
                                     </div>
@@ -402,13 +243,17 @@ const card = new Card({
                                 <!-- Card Variants -->
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <div class="demo-card" style="max-width: 100%; background: var(--bg-surface); border: 2px solid var(--primary);">
-                                            <h4>Карточка с акцентом</h4>
-                                            <p>Карточка с выделенной границей для акцента.</p>
+                                        <div class="card card-elevated">
+                                            <div class="card-content">
+                                                <h4>Карточка с тенью</h4>
+                                                <p>Карточка с повышенной тенью для акцента.</p>
+                                            </div>
                                         </div>
-                                        <div class="demo-card" style="max-width: 100%; background: transparent; border: 2px solid var(--bg-surface-variant);">
-                                            <h4>Контурная карточка</h4>
-                                            <p>Карточка с контуром вместо фона.</p>
+                                        <div class="card card-outlined">
+                                            <div class="card-content">
+                                                <h4>Контурная карточка</h4>
+                                                <p>Карточка с контуром вместо тени.</p>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="component-code">
@@ -416,14 +261,14 @@ const card = new Card({
                                             <pre><code class="language-javascript">// Различные варианты карточек
 const cardVariants = [
     {
-        variant: 'accent',
-        title: 'Карточка с акцентом', 
-        content: 'Карточка с выделенной границей.'
+        variant: 'elevated',
+        title: 'Карточка с тенью',
+        content: 'Карточка с повышенной тенью для акцента.'
     },
     {
         variant: 'outlined',
         title: 'Контурная карточка',
-        content: 'Карточка с контуром вместо фона.'
+        content: 'Карточка с контуром вместо тени.'
     }
 ];
 
@@ -450,7 +295,7 @@ cardVariants.forEach(config => {
                                 <!-- Basic Modal -->
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <button class="btn btn-primary" onclick="demoModal.open()" style="min-width: 140px;">Открыть модалку</button>
+                                        <button class="btn btn-primary" onclick="demoModal.open()">Открыть модалку</button>
                                     </div>
                                     <div class="component-code">
                                         <div class="code-scroll-wrapper">
@@ -458,7 +303,7 @@ cardVariants.forEach(config => {
 const modal = new Modal({
     title: 'Заголовок модалки',
     content: 'Содержимое модального окна',
-    size: 'md',
+    size: 'md', // sm, md, lg, xl
     closeOnOverlayClick: true,
     closeOnEsc: true,
     showCloseButton: true,
@@ -473,7 +318,7 @@ const modal = new Modal({
         },
         {
             text: 'Отмена',
-            variant: 'outline', 
+            variant: 'outline',
             onClick: () => modal.close()
         }
     ]
@@ -492,11 +337,12 @@ modal.open();</code></pre>
                                         <button class="btn btn-outline" onclick="demoSmallModal.open()">Small</button>
                                         <button class="btn btn-outline" onclick="demoMediumModal.open()">Medium</button>
                                         <button class="btn btn-outline" onclick="demoLargeModal.open()">Large</button>
+                                        <button class="btn btn-outline" onclick="demoFullModal.open()">Fullscreen</button>
                                     </div>
                                     <div class="component-code">
                                         <div class="code-scroll-wrapper">
                                             <pre><code class="language-javascript">// Модальные окна разных размеров
-const sizes = ['sm', 'md', 'lg'];
+const sizes = ['sm', 'md', 'lg', 'xl'];
 sizes.forEach(size => {
     const modal = new Modal({
         title: `Modal ${size}`,
@@ -532,7 +378,7 @@ sizes.forEach(size => {
                                 <!-- Basic Tabs -->
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <div class="tabs-demo">
+                                        <div class="tabs-container" id="demoTabs1">
                                             <div class="tabs">
                                                 <button class="tab active" data-tab="tab1">Профиль</button>
                                                 <button class="tab" data-tab="tab2">Настройки</button>
@@ -565,16 +411,17 @@ const tabs = new Tabs({
             active: true
         },
         {
-            id: 'settings', 
+            id: 'settings',
             label: 'Настройки',
             content: '&lt;h4&gt;Настройки системы&lt;/h4&gt;&lt;p&gt;Настройки приложения...&lt;/p&gt;'
         },
         {
             id: 'notifications',
-            label: 'Уведомления', 
+            label: 'Уведомления',
             content: '&lt;h4&gt;Уведомления&lt;/h4&gt;&lt;p&gt;Настройки уведомлений...&lt;/p&gt;'
         }
     ],
+    variant: 'default', // default, pills, underlined
     onChange: (activeTab) => {
         console.log('Active tab:', activeTab);
     }
@@ -593,32 +440,32 @@ const tabs = new Tabs({
                                 <!-- Basic Accordion -->
                                 <div class="component-card">
                                     <div class="component-preview">
-                                        <div class="accordion-demo">
+                                        <div class="accordion" id="demoAccordion">
                                             <div class="accordion-item">
                                                 <button class="accordion-header">
-                                                    Section 1
+                                                    <span>Секция 1</span>
                                                     <span class="accordion-icon">+</span>
                                                 </button>
                                                 <div class="accordion-content">
-                                                    <p>Content for section 1</p>
+                                                    <p>Содержимое первой секции аккордеона.</p>
                                                 </div>
                                             </div>
                                             <div class="accordion-item">
                                                 <button class="accordion-header">
-                                                    Section 2
+                                                    <span>Секция 2</span>
                                                     <span class="accordion-icon">+</span>
                                                 </button>
                                                 <div class="accordion-content">
-                                                    <p>Content for section 2</p>
+                                                    <p>Содержимое второй секции аккордеона.</p>
                                                 </div>
                                             </div>
                                             <div class="accordion-item">
                                                 <button class="accordion-header">
-                                                    Section 3
+                                                    <span>Секция 3</span>
                                                     <span class="accordion-icon">+</span>
                                                 </button>
                                                 <div class="accordion-content">
-                                                    <p>Content for section 3</p>
+                                                    <p>Содержимое третьей секции аккордеона.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -630,22 +477,23 @@ const accordion = new Accordion({
     container: '#accordionContainer',
     items: [
         {
-            title: 'Section 1',
-            content: '&lt;p&gt;Content for section 1&lt;/p&gt;',
+            title: 'Секция 1',
+            content: '&lt;p&gt;Содержимое первой секции аккордеона.&lt;/p&gt;',
             expanded: false
         },
         {
-            title: 'Section 2',
-            content: '&lt;p&gt;Content for section 2&lt;/p&gt;',
+            title: 'Секция 2',
+            content: '&lt;p&gt;Содержимое второй секции аккордеона.&lt;/p&gt;',
             expanded: false
         },
         {
-            title: 'Section 3', 
-            content: '&lt;p&gt;Content for section 3&lt;/p&gt;',
+            title: 'Секция 3',
+            content: '&lt;p&gt;Содержимое третьей секции аккордеона.&lt;/p&gt;',
             expanded: true
         }
     ],
     allowMultiple: false,
+    variant: 'default', // default, bordered, separated
     onToggle: (item, state) => {
         console.log(`Section "${item.title}" is ${state ? 'expanded' : 'collapsed'}`);
     }
@@ -658,8 +506,561 @@ const accordion = new Accordion({
                         </div>
                     </div>
 
-                    <!-- Добавлю остальные категории по аналогии -->
-                    
+                    <!-- Form Components -->
+                    <div class="component-category" id="forms">
+                        <h2>Компоненты форм</h2>
+
+                        <!-- Select -->
+                        <div class="component-section">
+                            <h3>Выпадающие списки</h3>
+                            <div class="component-grid">
+                                <!-- Basic Select -->
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <select class="select">
+                                            <option value="">Выберите опцию</option>
+                                            <option value="1">Опция 1</option>
+                                            <option value="2">Опция 2</option>
+                                            <option value="3">Опция 3</option>
+                                        </select>
+                                        
+                                        <select class="select select-multiple" multiple>
+                                            <option value="1">Опция 1</option>
+                                            <option value="2">Опция 2</option>
+                                            <option value="3">Опция 3</option>
+                                            <option value="4">Опция 4</option>
+                                        </select>
+                                    </div>
+                                    <div class="component-code">
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">// Создание выпадающего списка
+const select = new Select({
+    options: [
+        { value: '', label: 'Выберите опцию', disabled: true },
+        { value: '1', label: 'Опция 1' },
+        { value: '2', label: 'Опция 2' },
+        { value: '3', label: 'Опция 3' }
+    ],
+    placeholder: 'Выберите опцию',
+    multiple: false,
+    searchable: true,
+    clearable: true,
+    value: '',
+    onChange: (value) => {
+        console.log('Selected value:', value);
+    }
+});
+
+// Множественный выбор
+const multiSelect = new Select({
+    options: [
+        { value: '1', label: 'Опция 1' },
+        { value: '2', label: 'Опция 2' },
+        { value: '3', label: 'Опция 3' }
+    ],
+    multiple: true,
+    placeholder: 'Выберите опции',
+    onChange: (values) => {
+        console.log('Selected values:', values);
+    }
+});</code></pre>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Checkbox & Radio -->
+                        <div class="component-section">
+                            <h3>Чекбоксы и радиокнопки</h3>
+                            <div class="component-grid">
+                                <!-- Checkboxes -->
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <label class="checkbox">
+                                            <input type="checkbox" checked>
+                                            <span class="checkmark"></span>
+                                            <span class="label">Чекбокс 1</span>
+                                        </label>
+                                        
+                                        <label class="checkbox">
+                                            <input type="checkbox">
+                                            <span class="checkmark"></span>
+                                            <span class="label">Чекбокс 2</span>
+                                        </label>
+                                        
+                                        <label class="checkbox">
+                                            <input type="checkbox" disabled>
+                                            <span class="checkmark"></span>
+                                            <span class="label">Отключенный</span>
+                                        </label>
+                                    </div>
+                                    <div class="component-code">
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">// Создание чекбоксов
+const checkbox = new Checkbox({
+    label: 'Чекбокс 1',
+    checked: true,
+    disabled: false,
+    onChange: (checked) => {
+        console.log('Checkbox checked:', checked);
+    }
+});
+
+// Группа чекбоксов
+const checkboxGroup = new CheckboxGroup({
+    options: [
+        { label: 'Опция 1', value: '1', checked: true },
+        { label: 'Опция 2', value: '2', checked: false },
+        { label: 'Опция 3', value: '3', checked: false }
+    ],
+    name: 'checkbox-group',
+    onChange: (values) => {
+        console.log('Selected values:', values);
+    }
+});</code></pre>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+
+                                <!-- Radio Buttons -->
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <label class="radio">
+                                            <input type="radio" name="demo-radio" checked>
+                                            <span class="radiomark"></span>
+                                            <span class="label">Радио 1</span>
+                                        </label>
+                                        
+                                        <label class="radio">
+                                            <input type="radio" name="demo-radio">
+                                            <span class="radiomark"></span>
+                                            <span class="label">Радио 2</span>
+                                        </label>
+                                        
+                                        <label class="radio">
+                                            <input type="radio" name="demo-radio" disabled>
+                                            <span class="radiomark"></span>
+                                            <span class="label">Отключенный</span>
+                                        </label>
+                                    </div>
+                                    <div class="component-code">
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">// Создание радиокнопок
+const radioGroup = new RadioGroup({
+    options: [
+        { label: 'Радио 1', value: '1', checked: true },
+        { label: 'Радио 2', value: '2', checked: false },
+        { label: 'Радио 3', value: '3', checked: false }
+    ],
+    name: 'radio-group',
+    onChange: (value) => {
+        console.log('Selected value:', value);
+    }
+});
+
+// Одиночная радиокнопка
+const radio = new Radio({
+    label: 'Радио кнопка',
+    value: 'option1',
+    checked: false,
+    name: 'radio-group',
+    onChange: (checked) => {
+        console.log('Radio checked:', checked);
+    }
+});</code></pre>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sliders -->
+                        <div class="component-section">
+                            <h3>Слайдеры</h3>
+                            <div class="component-grid">
+                                <!-- Range Slider -->
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <div class="slider-container">
+                                            <input type="range" class="slider" min="0" max="100" value="50">
+                                            <div class="slider-value">50</div>
+                                        </div>
+                                        
+                                        <div class="slider-container">
+                                            <input type="range" class="slider slider-range" min="0" max="100" value="25,75">
+                                            <div class="slider-values">25 - 75</div>
+                                        </div>
+                                    </div>
+                                    <div class="component-code">
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">// Создание слайдера
+const slider = new Slider({
+    min: 0,
+    max: 100,
+    value: 50,
+    step: 1,
+    disabled: false,
+    showValue: true,
+    onChange: (value) => {
+        console.log('Slider value:', value);
+    },
+    onInput: (value) => {
+        console.log('Slider input:', value);
+    }
+});
+
+// Диапазонный слайдер
+const rangeSlider = new RangeSlider({
+    min: 0,
+    max: 100,
+    values: [25, 75],
+    step: 1,
+    showValues: true,
+    onChange: (values) => {
+        console.log('Range values:', values);
+    }
+});</code></pre>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Components -->
+                    <div class="component-category" id="navigation">
+                        <h2>Навигационные компоненты</h2>
+
+                        <!-- Breadcrumbs -->
+                        <div class="component-section">
+                            <h3>Хлебные крошки</h3>
+                            <div class="component-grid">
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <nav class="breadcrumbs">
+                                            <a href="#" class="breadcrumb-item">Главная</a>
+                                            <span class="breadcrumb-separator">/</span>
+                                            <a href="#" class="breadcrumb-item">Библиотека</a>
+                                            <span class="breadcrumb-separator">/</span>
+                                            <span class="breadcrumb-item active">Компоненты</span>
+                                        </nav>
+                                    </div>
+                                    <div class="component-code">
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">// Создание хлебных крошек
+const breadcrumbs = new Breadcrumbs({
+    items: [
+        { label: 'Главная', href: '/' },
+        { label: 'Библиотека', href: '/library' },
+        { label: 'Компоненты', href: '/components', active: true }
+    ],
+    separator: '/', // или '>', '→'
+    showHome: true,
+    homeIcon: '🏠',
+    onClick: (item, index) => {
+        console.log('Clicked:', item.label);
+    }
+});</code></pre>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="component-section">
+                            <h3>Пагинация</h3>
+                            <div class="component-grid">
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <div class="pagination">
+                                            <button class="pagination-item" disabled>‹</button>
+                                            <button class="pagination-item active">1</button>
+                                            <button class="pagination-item">2</button>
+                                            <button class="pagination-item">3</button>
+                                            <span class="pagination-ellipsis">...</span>
+                                            <button class="pagination-item">10</button>
+                                            <button class="pagination-item">›</button>
+                                        </div>
+                                    </div>
+                                    <div class="component-code">
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">// Создание пагинации
+const pagination = new Pagination({
+    totalItems: 150,
+    itemsPerPage: 10,
+    currentPage: 1,
+    visiblePages: 5,
+    showPrevNext: true,
+    showFirstLast: true,
+    prevText: '‹',
+    nextText: '›',
+    firstText: '«',
+    lastText: '»',
+    onPageChange: (page) => {
+        console.log('Page changed to:', page);
+        // Загрузка данных для страницы
+        loadData(page);
+    }
+});</code></pre>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Display Components -->
+                    <div class="component-category" id="data">
+                        <h2>Компоненты отображения данных</h2>
+
+                        <!-- Tables -->
+                        <div class="component-section">
+                            <h3>Таблицы</h3>
+                            <div class="component-grid">
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <div class="table-container">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Имя</th>
+                                                        <th>Email</th>
+                                                        <th>Статус</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Иван Иванов</td>
+                                                        <td>ivan@example.com</td>
+                                                        <td><span class="badge badge-success">Активен</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>Петр Петров</td>
+                                                        <td>petr@example.com</td>
+                                                        <td><span class="badge badge-warning">Ожидание</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>Мария Сидорова</td>
+                                                        <td>maria@example.com</td>
+                                                        <td><span class="badge badge-error">Неактивен</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="component-code">
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">// Создание таблицы
+const table = new Table({
+    columns: [
+        { key: 'id', label: 'ID', sortable: true },
+        { key: 'name', label: 'Имя', sortable: true },
+        { key: 'email', label: 'Email', sortable: true },
+        { 
+            key: 'status', 
+            label: 'Статус',
+            render: (value) => {
+                const badgeClass = {
+                    'active': 'badge-success',
+                    'pending': 'badge-warning',
+                    'inactive': 'badge-error'
+                }[value];
+                return `&lt;span class="badge ${badgeClass}"&gt;${value}&lt;/span&gt;`;
+            }
+        }
+    ],
+    data: [
+        { id: 1, name: 'Иван Иванов', email: 'ivan@example.com', status: 'active' },
+        { id: 2, name: 'Петр Петров', email: 'petr@example.com', status: 'pending' },
+        { id: 3, name: 'Мария Сидорова', email: 'maria@example.com', status: 'inactive' }
+    ],
+    sortable: true,
+    searchable: true,
+    pagination: true,
+    itemsPerPage: 10,
+    onRowClick: (row) => {
+        console.log('Row clicked:', row);
+    },
+    onSort: (column, direction) => {
+        console.log('Sorted by:', column, direction);
+    }
+});</code></pre>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bars -->
+                        <div class="component-section">
+                            <h3>Индикаторы прогресса</h3>
+                            <div class="component-grid">
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 45%"></div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-success" style="width: 75%"></div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-warning" style="width: 30%"></div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-error" style="width: 90%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="component-code">
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">// Создание индикатора прогресса
+const progress = new ProgressBar({
+    value: 45,
+    max: 100,
+    variant: 'default', // default, success, warning, error
+    showLabel: true,
+    striped: false,
+    animated: false,
+    height: '8px',
+    onComplete: () => {
+        console.log('Progress completed!');
+    }
+});
+
+// Анимированный прогресс
+const animatedProgress = new ProgressBar({
+    value: 75,
+    variant: 'success',
+    striped: true,
+    animated: true,
+    showLabel: true,
+    labelPosition: 'inside' // inside, outside
+});</code></pre>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feedback Components -->
+                    <div class="component-category" id="feedback">
+                        <h2>Компоненты обратной связи</h2>
+
+                        <!-- Alerts -->
+                        <div class="component-section">
+                            <h3>Уведомления</h3>
+                            <div class="component-grid">
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <div class="alert alert-info">
+                                            <div class="alert-content">
+                                                <strong>Информация!</strong> Это информационное сообщение.
+                                            </div>
+                                            <button class="alert-close">×</button>
+                                        </div>
+                                        <div class="alert alert-success">
+                                            <div class="alert-content">
+                                                <strong>Успех!</strong> Операция выполнена успешно.
+                                            </div>
+                                            <button class="alert-close">×</button>
+                                        </div>
+                                        <div class="alert alert-warning">
+                                            <div class="alert-content">
+                                                <strong>Внимание!</strong> Это предупреждающее сообщение.
+                                            </div>
+                                            <button class="alert-close">×</button>
+                                        </div>
+                                        <div class="alert alert-error">
+                                            <div class="alert-content">
+                                                <strong>Ошибка!</strong> Произошла ошибка при выполнении.
+                                            </div>
+                                            <button class="alert-close">×</button>
+                                        </div>
+                                    </div>
+                                    <div class="component-code">
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">// Создание уведомления
+const alert = new Alert({
+    message: 'Это информационное сообщение.',
+    variant: 'info', // info, success, warning, error
+    title: 'Информация!',
+    dismissible: true,
+    autoDismiss: false,
+    duration: 5000,
+    onDismiss: () => {
+        console.log('Alert dismissed');
+    }
+});
+
+// Показ уведомления
+alert.show();
+
+// Утилита для быстрого показа
+Alert.show('Операция выполнена успешно!', 'success', 3000);</code></pre>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Toasts -->
+                        <div class="component-section">
+                            <h3>Тосты</h3>
+                            <div class="component-grid">
+                                <div class="component-card">
+                                    <div class="component-preview">
+                                        <button class="btn btn-primary" onclick="Toast.show('Сообщение успешно отправлено!', 'success')">
+                                            Показать успешный тост
+                                        </button>
+                                        <button class="btn btn-outline" onclick="Toast.show('Произошла ошибка!', 'error')">
+                                            Показать ошибку
+                                        </button>
+                                    </div>
+                                    <div class="component-code">
+                                        <div class="code-scroll-wrapper">
+                                            <pre><code class="language-javascript">// Показ тоста
+Toast.show('Сообщение успешно отправлено!', 'success', 3000);
+
+// Создание кастомного тоста
+const toast = new Toast({
+    message: 'Пользователь создан успешно',
+    variant: 'success',
+    duration: 5000,
+    position: 'top-right', // top-right, top-left, bottom-right, bottom-left
+    showIcon: true,
+    showClose: true,
+    onClose: () => {
+        console.log('Toast closed');
+    }
+});
+
+// Различные варианты
+Toast.success('Успешное выполнение!');
+Toast.error('Произошла ошибка!');
+Toast.warning('Внимание!');
+Toast.info('Информационное сообщение');</code></pre>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline copy-btn">Копировать код</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -676,14 +1077,14 @@ const accordion = new Accordion({
             </div>
         </div>
 
-        <div id="demoSmallModal" class="modal">
+        <div id="demoSmallModal" class="modal modal-sm">
             <div class="modal-content">
                 <h3>Маленькое модальное окно</h3>
                 <p>Это модальное окно маленького размера</p>
             </div>
         </div>
 
-        <div id="demoLargeModal" class="modal">
+        <div id="demoLargeModal" class="modal modal-lg">
             <div class="modal-content">
                 <h3>Большое модальное окно</h3>
                 <p>Это модальное окно большого размера</p>
@@ -712,12 +1113,13 @@ const accordion = new Accordion({
             window.demoModal = new Modal({ element: '#demoModal' });
             window.demoSmallModal = new Modal({ element: '#demoSmallModal' });
             window.demoLargeModal = new Modal({ element: '#demoLargeModal' });
+            window.demoFullModal = new Modal({ element: '#demoFullModal' });
 
             // Инициализация табов
-            new Tabs({ container: '.tabs-demo' });
+            new Tabs({ container: '#demoTabs1' });
             
             // Инициализация аккордеона
-            new Accordion({ container: '.accordion-demo' });
+            new Accordion({ container: '#demoAccordion' });
         });
     </script>
 </body>

@@ -1,4 +1,3 @@
-<!-- tools.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -397,7 +396,6 @@ while true; do
         # Простой анализ ошибок
         if echo "$POD_LOGS" | grep -q "OutOfMemory"; then
             echo "💾 Memory issue detected in $pod - increasing resources"
-            # Здесь может быть логика увеличения ресурсов
         elif echo "$POD_LOGS" | grep -q "Connection refused"; then
             echo "🌐 Network issue detected in $pod - checking dependencies"
         fi
@@ -469,252 +467,6 @@ echo "🎉 Multi-region deployment completed!"</code></pre>
                             </div>
                         </div>
                     </div>
-
-                    <!-- AI & ML Tools -->
-                    <div class="category-card">
-                        <h2>🧠 AI & ML Инструменты</h2>
-                        <div class="tools-grid">
-                            <div class="tool-card detailed new">
-                                <span class="complexity-badge complexity-beginner">Для начинающих</span>
-                                <div class="tool-icon">🤖</div>
-                                <h3>ML Model Auto-Trainer</h3>
-                                <p>Автоматическое обучение ML моделей с подбором гиперпараметров</p>
-                                <div class="tool-tags">
-                                    <span class="tool-tag">Machine Learning</span>
-                                    <span class="tool-tag">AutoML</span>
-                                    <span class="tool-tag">Training</span>
-                                </div>
-                                <div class="tool-code">
-                                    <pre><code>#!/bin/bash
-# ml-auto-trainer.sh
-# Автоматическое обучение ML моделей
-
-DATASET_PATH="./data/training.csv"
-MODEL_TYPES=("random_forest" "xgboost" "neural_network")
-HYPERPARAM_GRID=(
-    "learning_rate=0.1,0.01,0.001"
-    "n_estimators=100,200,500"
-    "max_depth=3,5,7,10"
-)
-
-auto_train_model() {
-    local model_type=$1
-    echo "🧠 Training $model_type model..."
-    
-    python3 - << EOF
-import pandas as pd
-from sklearn.model_selection import GridSearchCV
-from sklearn.ensemble import RandomForestClassifier
-from xgboost import XGBClassifier
-from sklearn.neural_network import MLPClassifier
-import joblib
-
-# Загрузка данных
-data = pd.read_csv("$DATASET_PATH")
-X = data.drop('target', axis=1)
-y = data['target']
-
-# Выбор модели
-if "$model_type" == "random_forest":
-    model = RandomForestClassifier()
-    param_grid = {
-        'n_estimators': [100, 200, 500],
-        'max_depth': [3, 5, 7, 10]
-    }
-elif "$model_type" == "xgboost":
-    model = XGBClassifier()
-    param_grid = {
-        'learning_rate': [0.1, 0.01, 0.001],
-        'n_estimators': [100, 200, 500]
-    }
-else:
-    model = MLPClassifier()
-    param_grid = {
-        'hidden_layer_sizes': [(50,), (100,), (50, 50)],
-        'alpha': [0.0001, 0.001, 0.01]
-    }
-
-# Поиск лучших параметров
-grid_search = GridSearchCV(model, param_grid, cv=5, scoring='accuracy')
-grid_search.fit(X, y)
-
-# Сохранение лучшей модели
-best_model = grid_search.best_estimator_
-joblib.dump(best_model, f"${model_type}_best_model.pkl")
-
-print(f"✅ Best {model_type} model saved with score: {grid_search.best_score_:.4f}")
-EOF
-}
-
-# Обучение всех типов моделей
-for model_type in "${MODEL_TYPES[@]}"; do
-    auto_train_model "$model_type"
-done
-
-echo "🎉 All models trained successfully!"</code></pre>
-                                </div>
-                                <button class="btn btn-primary copy-btn">Копировать скрипт</button>
-                            </div>
-
-                            <div class="tool-card detailed featured">
-                                <span class="complexity-badge complexity-intermediate">Средний уровень</span>
-                                <div class="tool-icon">📊</div>
-                                <h3>Data Pipeline Automator</h3>
-                                <p>Автоматизация ETL пайплайнов с мониторингом качества данных</p>
-                                <div class="tool-tags">
-                                    <span class="tool-tag">ETL</span>
-                                    <span class="tool-tag">Data Pipeline</span>
-                                    <span class="tool-tag">Quality</span>
-                                </div>
-                                <div class="tool-code">
-                                    <pre><code>#!/bin/bash
-# data-pipeline-automator.sh
-# Автоматизация ETL пайплайнов
-
-CONFIG_FILE="./pipeline_config.json"
-LOG_FILE="./pipeline_$(date +%Y%m%d_%H%M%S).log"
-
-run_data_quality_checks() {
-    local dataset=$1
-    echo "🔍 Running data quality checks for: $dataset"
-    
-    python3 - << EOF
-import pandas as pd
-import json
-
-def check_data_quality(df, dataset_name):
-    checks = {
-        'total_rows': len(df),
-        'null_percentage': df.isnull().mean().to_dict(),
-        'duplicate_rows': df.duplicated().sum(),
-        'data_types': df.dtypes.astype(str).to_dict()
-    }
-    
-    # Проверка аномалий в числовых колонках
-    numeric_cols = df.select_dtypes(include=['number']).columns
-    for col in numeric_cols:
-        q1 = df[col].quantile(0.25)
-        q3 = df[col].quantile(0.75)
-        iqr = q3 - q1
-        outliers = df[(df[col] < q1 - 1.5*iqr) | (df[col] > q3 + 1.5*iqr)]
-        checks[f'{col}_outliers'] = len(outliers)
-    
-    return checks
-
-# Загрузка и проверка данных
-df = pd.read_csv("$dataset")
-quality_report = check_data_quality(df, "$dataset")
-
-# Сохранение отчета
-with open("quality_report.json", "w") as f:
-    json.dump(quality_report, f, indent=2)
-
-print("✅ Data quality check completed")
-EOF
-}
-
-# Основной ETL пайплайн
-echo "🔄 Starting ETL Pipeline..."
-
-# Extract
-echo "📥 Extracting data from sources..."
-# Логика экстракции данных
-
-# Transform
-echo "🛠️ Transforming data..."
-run_data_quality_checks "raw_data.csv"
-
-# Load
-echo "📤 Loading data to destination..."
-# Логика загрузки данных
-
-echo "🎉 ETL Pipeline completed successfully!"</code></pre>
-                                </div>
-                                <button class="btn btn-primary copy-btn">Копировать скрипт</button>
-                            </div>
-
-                            <div class="tool-card detailed">
-                                <span class="complexity-badge complexity-advanced">Продвинутый</span>
-                                <div class="tool-icon">⚡</div>
-                                <h3>Real-time AI Inference</h3>
-                                <p>Система реального времени для инференса ML моделей с масштабированием</p>
-                                <div class="tool-tags">
-                                    <span class="tool-tag">Real-time</span>
-                                    <span class="tool-tag">Inference</span>
-                                    <span class="tool-tag">Scalability</span>
-                                </div>
-                                <div class="tool-code">
-                                    <pre><code>#!/bin/bash
-# real-time-inference.sh
-# Система реального времени для ML инференса
-
-MODEL_SERVERS=("server1:8000" "server2:8000" "server3:8000")
-CURRENT_SERVER=0
-BATCH_SIZE=32
-MAX_RETRIES=3
-
-load_balancer() {
-    local request_data=$1
-    local retry_count=0
-    
-    while [ $retry_count -lt $MAX_RETRIES ]; do
-        local server=${MODEL_SERVERS[$CURRENT_SERVER]}
-        echo "🔄 Sending request to: $server"
-        
-        response=$(curl -s -X POST \
-            -H "Content-Type: application/json" \
-            -d "$request_data" \
-            --connect-timeout 10 \
-            --max-time 30 \
-            "http://$server/predict")
-        
-        if [ $? -eq 0 ] && [ -n "$response" ]; then
-            echo "✅ Success from $server"
-            echo "$response"
-            return 0
-        else
-            echo "❌ Failed to get response from $server"
-            ((CURRENT_SERVER = (CURRENT_SERVER + 1) % ${#MODEL_SERVERS[@]}))
-            ((retry_count++))
-        fi
-    done
-    
-    echo "💥 All servers failed after $MAX_RETRIES retries"
-    return 1
-}
-
-# Мониторинг здоровья серверов
-health_check() {
-    for server in "${MODEL_SERVERS[@]}"; do
-        if curl -s --connect-timeout 5 "http://$server/health" > /dev/null; then
-            echo "🟢 $server is healthy"
-        else
-            echo "🔴 $server is down"
-        fi
-    done
-}
-
-# Основной цикл обработки запросов
-echo "🚀 Starting real-time inference system..."
-health_check
-
-while true; do
-    # Чтение входных данных (например, из Kafka, Redis или очереди)
-    # request_data=$(read_from_queue)
-    
-    # Обработка запроса через балансировщик
-    # result=$(load_balancer "$request_data")
-    
-    # Отправка результата
-    # send_result "$result"
-    
-    sleep 0.1  # Поддержка высокой частоты запросов
-done</code></pre>
-                                </div>
-                                <button class="btn btn-primary copy-btn">Копировать скрипт</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -722,30 +474,14 @@ done</code></pre>
         <footer class="footer">
             <div class="container">
                 <div class="footer-content">
-                    <div class="footer-section">
-                        <h3>Githsz</h3>
-                        <p>Полезные инструменты и ресурсы для разработчиков</p>
-                    </div>
-                    <div class="footer-section">
-                        <h4>Быстрые ссылки</h4>
-                        <a href="icons.html" class="footer-link">Иконки</a>
-                        <a href="tools.html" class="footer-link">Инструменты</a>
-                        <a href="components.html" class="footer-link">Компоненты</a>
-                    </div>
-                    <div class="footer-section">
-                        <h4>Ресурсы</h4>
-                        <a href="utilities.html" class="footer-link">Утилиты</a>
-                        <a href="contact.html" class="footer-link">Контакты</a>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <p>&copy; 2024 Githsz. Все права защищены.</p>
+                    <div class="footer-brand">Githsz</div>
+                    <p class="footer-text">2024 © Fullstack GitHub Developer</p>
                 </div>
             </div>
         </footer>
     </div>
 
-    <script src="js/script.js"></script>
+    <script src="js/main.js"></script>
     <script>
         // Функционал копирования кода
         document.addEventListener('DOMContentLoaded', function() {
@@ -753,7 +489,7 @@ done</code></pre>
             
             copyButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    const codeBlock = this.previousElementSibling.querySelector('code');
+                    const codeBlock = this.closest('.tool-card').querySelector('code');
                     const codeText = codeBlock.textContent;
                     
                     navigator.clipboard.writeText(codeText).then(() => {
@@ -772,6 +508,17 @@ done</code></pre>
                     });
                 });
             });
+
+            // Мобильное меню
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
         });
     </script>
 </body>
